@@ -10,6 +10,15 @@
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>View all Pokemons</title>
+
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" />
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
    </head>
    <body>
       <h1>The chosen Pokemon is</h1>

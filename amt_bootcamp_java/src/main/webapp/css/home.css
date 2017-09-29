@@ -1,0 +1,27 @@
+/* 
+    Created on : 29 sept. 2017, 17:06:17
+    Author     : Mathieu Monteverde, Sathiy Kirushnapillai
+*/
+
+#home-cover {
+}
+
+#home-cover .cover {
+   height: 70vh;
+   
+   background-image: url('/amt_bootcamp_java-1.0-SNAPSHOT/img/home_cover.png');
+   background-size: cover;
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   border-bottom: solid 2px #333;
+}
+
+#home-cover h1 {
+   text-transform: uppercase;
+}
+
+#home-cover h2 {
+   font-size: 1.8em;
+   font-weight: lighter;
+}
