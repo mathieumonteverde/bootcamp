@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mathieu
  */
-public class PokemonServlet extends HttpServlet {
-
+public class PokemonEditServlet extends HttpServlet {
 
    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /**
@@ -31,15 +30,7 @@ public class PokemonServlet extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      
-      Pokemon pikachu = new Pokemon("Pikachu", 
-              new String[]{"Lightning"}, 
-              new Pokemon.Type[]{Pokemon.Type.ELECTRIC},
-              1);
-      request.setAttribute("pokemon", pikachu);
-      request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
-      
-   }
+      request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);   }
 
    /**
     * Handles the HTTP <code>POST</code> method.
@@ -52,7 +43,8 @@ public class PokemonServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      // Do Something on POST
+      
+      request.getRequestDispatcher("WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }
 
 }

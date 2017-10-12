@@ -4,9 +4,17 @@
         <servlet-name>PokemonServlet</servlet-name>
         <servlet-class>com.heig.amt_bootcamp_java.web.PokemonServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PokemonEditServlet</servlet-name>
+        <servlet-class>com.heig.amt_bootcamp_java.web.PokemonEditServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PokemonServlet</servlet-name>
         <url-pattern>/pokemons</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PokemonEditServlet</servlet-name>
+        <url-pattern>/pokemons/edit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

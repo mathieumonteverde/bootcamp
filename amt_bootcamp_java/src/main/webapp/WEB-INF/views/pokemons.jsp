@@ -11,26 +11,20 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>View all Pokemons</title>
 
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" />
-
-      <!-- Custom App CSS -->
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/utils.css" />
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css" />
-
-      <!-- Latest compiled and minified JavaScript -->
-      <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+      <title>JSP Page</title>
+      <jsp:include page="./parts/htmlHead.jsp" />
    </head>
    <body>
 
 
       <section class="container-fluid">
          <section id="home-cover" class="row text-center">
-            <div class="cover">
-
+            <div class="cover col-md-12">
+               
             </div>
-            <article class="padding-sm col-lg-8 col-lg-offset-2">
+         </section>
+         <section class="row text-center justify-content-md-center">
+            <article class="padding-sm col-md-12 col-lg-8">
                <h1>List of Pokemons</h1>
 
                <div class="panel panel-default text-left">
