@@ -9,7 +9,7 @@
 <html>
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>Edit ${requestScope.pokemon.name}</title>
+      <title>Add a Pokemon</title>
       <jsp:include page="./parts/htmlHead.jsp" />
    </head>
    <body>
@@ -27,13 +27,12 @@
          <section class="row text-center justify-content-md-center">
             <article class="padding-sm col-md-12 col-lg-8">
 
-               <h1>Edit this pokemon</h1>
+               <h1>Add a pokemon</h1>
 
                <!-- Form to Edit the Pokemon -->
-               <form class="text-left" action="${pageContext.request.contextPath}/pokemons/edit" method="POST">
-                  <!-- Name of the pokemon to edit -->
-                  <div class="form-group">
-                     <h2>${requestScope.pokemon.name}</h2>
+               <form class="text-left" action="${pageContext.request.contextPath}/pokemons/add" method="POST">
+                  <div class="form-group row">
+                     <input type="text" class="form-control" id="pokemonName" name="pokemonName" placeholder="Pokemon name..." />
                   </div>
                   
                   <div class="form-group row">
@@ -61,7 +60,7 @@
                   </div>
 
                   <div class="row">
-                     <input class="btn btn-primary col-xs-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Edit pokemon...">
+                     <input class="btn btn-primary col-xs-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Add pokemon...">
                   </div>
                </form>
             </article>

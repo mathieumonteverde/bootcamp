@@ -5,8 +5,8 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
-import com.heig.amt_bootcamp_java.model.Pokemon;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mathieu
  */
-public class PokemonEditServlet extends HttpServlet {
+public class PokemonDeleteServlet extends HttpServlet {
 
    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /**
@@ -31,28 +31,16 @@ public class PokemonEditServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
       String pokemonName = request.getParameter("pokemon");
-      
-      if (pokemonName != null) {
-         // If the pokemon parameter is not null (GET method) we show the edit form
-         
-         // TODO Fetch check input and fetch corresponding pokemon model
-         
-         Pokemon pokemon = new Pokemon(pokemonName,
-                 new String[]{"Lightning"},
-                 new Pokemon.Type[]{Pokemon.Type.ELECTRIC},
-                 1);
-         request.setAttribute("pokemon", pokemon);
 
-         request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);
+      if (pokemonName != null) {
+
       } else {
-         // If the pokemon is not specified, we show the pokemon selection screen
-         
-         request.setAttribute("title", "Select Pokemon to edit");
-         request.setAttribute("actionUrl", "/pokemons/edit");
-         request.setAttribute("submitText", "Edit...");
+
+         request.setAttribute("title", "Select Pokemon to delete");
+         request.setAttribute("actionUrl", "/pokemons/delete");
+         request.setAttribute("submitText", "Delete...");
          request.getRequestDispatcher("/WEB-INF/views/pokemonActionSelection.jsp").forward(request, response);
       }
-
    }
 
    /**
@@ -67,7 +55,16 @@ public class PokemonEditServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
 
-      request.getRequestDispatcher("WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }
+
+   /**
+    * Returns a short description of the servlet.
+    *
+    * @return a String containing servlet description
+    */
+   @Override
+   public String getServletInfo() {
+      return "Short description";
+   }// </editor-fold>
 
 }

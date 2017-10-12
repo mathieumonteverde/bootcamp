@@ -8,13 +8,33 @@
         <servlet-name>PokemonEditServlet</servlet-name>
         <servlet-class>com.heig.amt_bootcamp_java.web.PokemonEditServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PokemonAddServlet</servlet-name>
+        <servlet-class>com.heig.amt_bootcamp_java.web.PokemonAddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PokemonDeleteServlet</servlet-name>
+        <servlet-class>com.heig.amt_bootcamp_java.web.PokemonDeleteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PokemonServlet</servlet-name>
         <url-pattern>/pokemons</url-pattern>
+        <url-pattern>/pokemons/</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PokemonEditServlet</servlet-name>
         <url-pattern>/pokemons/edit</url-pattern>
+        <url-pattern>/pokemons/edit/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PokemonAddServlet</servlet-name>
+        <url-pattern>/pokemons/add</url-pattern>
+        <url-pattern>/pokemons/add/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PokemonDeleteServlet</servlet-name>
+        <url-pattern>/pokemons/delete</url-pattern>
+        <url-pattern>/pokemons/delete/</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

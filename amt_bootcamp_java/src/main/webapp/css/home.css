@@ -8,13 +8,6 @@
 
 #home-cover .cover {
    height: 70vh;
-   
-   background-image: url('/amt_bootcamp_java-1.0-SNAPSHOT/img/home_cover.png');
-   background-size: cover;
-   background-position: center center;
-   background-repeat: no-repeat;
-   background-attachment: fixed;
-   border-bottom: solid 2px #333;
 }
 
 #home-cover h1 {
