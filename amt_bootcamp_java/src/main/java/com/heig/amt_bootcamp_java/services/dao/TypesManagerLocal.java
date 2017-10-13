@@ -7,8 +7,8 @@ import javax.ejb.Local;
 @Local
 public interface TypesManagerLocal {
    /**
-    * Returns a list of all pokemons
-    * @return a list of all pokemons
+    * Returns a list of all types
+    * @return a list of all types
     */
    public List<Type> findAll();
 }
