@@ -6,3 +6,4 @@ amt_bootcamp_java/nbdist/
 amt_bootcamp_java/.nb-gradle/
 amt_bootcamp_java/target
 .DS_Store
+*.nb-configuration.xml
