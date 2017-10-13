@@ -37,7 +37,7 @@ public class PokemonServlet extends HttpServlet {
    {
       
       response.setContentType("text/html;charset=UTF-8");
-      request.setAttribute("pokemons", pokemonsManager.findAllPokemons());
+      request.setAttribute("pokemons", pokemonsManager.findAll());
       request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
       
    }

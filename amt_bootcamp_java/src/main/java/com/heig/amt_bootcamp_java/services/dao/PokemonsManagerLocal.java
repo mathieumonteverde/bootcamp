@@ -10,7 +10,7 @@ public interface PokemonsManagerLocal {
     * Returns a list of all pokemons
     * @return a list of all pokemons
     */
-   public List<Pokemon> findAllPokemons();
+   public List<Pokemon> findAll();
    
    /**
     * Delete a pokemon by his no

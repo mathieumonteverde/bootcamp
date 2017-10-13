@@ -27,7 +27,7 @@ public class PokemonsManager implements PokemonsManagerLocal {
    private DataSource dataSource;
    
    @Override
-   public List<Pokemon> findAllPokemons() {
+   public List<Pokemon> findAll() {
       
       List<Pokemon> result = new ArrayList<>();
       
