@@ -26,3 +26,12 @@ BEGIN
   INNER JOIN Type ON Pokemon_Type.TypeName = Type.Name
   WHERE Pokemon.No = pokemonNo;
 END //
+
+
+-- Delete a pokemon
+DELIMITER //
+CREATE PROCEDURE deletePokemon (IN pokemonNo INT)
+BEGIN
+  DELETE FROM Pokemon
+  WHERE No = pokemonNo;
+END //

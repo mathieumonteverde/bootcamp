@@ -5,8 +5,10 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
+import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author mathieu
  */
 public class PokemonDeleteServlet extends HttpServlet {
+   
+   @EJB
+   private PokemonsManagerLocal pokemonsManager;
 
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /**
     * Handles the HTTP <code>GET</code> method.
     *
@@ -28,18 +32,30 @@ public class PokemonDeleteServlet extends HttpServlet {
     * @throws IOException if an I/O error occurs
     */
    @Override
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
-      String pokemonName = request.getParameter("pokemon");
-
-      if (pokemonName != null) {
-
-      } else {
-
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException 
+   {
+      try {
+         // Gets the no of the pokemon to delete
+         int no = Integer.parseInt(request.getParameter("pokemon"));
+         
+         // Delete the pokemon
+         pokemonsManager.deleteByNo(no);
+         
+         // Redirection
+         // TODO : Redirect with a message
+         RequestDispatcher dispatcher = 
+            request.getRequestDispatcher("/pokemons");
+         dispatcher.forward(request, response);
+         
+      } catch(NumberFormatException e) {
+         // Display an error message
          request.setAttribute("title", "Select Pokemon to delete");
          request.setAttribute("actionUrl", "/pokemons/delete");
          request.setAttribute("submitText", "Delete...");
-         request.getRequestDispatcher("/WEB-INF/views/pokemonActionSelection.jsp").forward(request, response);
+         request
+            .getRequestDispatcher("/WEB-INF/views/pokemonActionSelection.jsp")
+            .forward(request, response);
       }
    }
 
@@ -65,6 +81,6 @@ public class PokemonDeleteServlet extends HttpServlet {
    @Override
    public String getServletInfo() {
       return "Short description";
-   }// </editor-fold>
+   }
 
 }

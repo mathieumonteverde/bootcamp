@@ -33,8 +33,8 @@ CREATE TABLE Pokemon_Type (
   PokemonNo     int,
   TypeName      varchar(25),
   
-  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No),
-  FOREIGN KEY (TypeName) REFERENCES Type(Name)
+  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No) ON DELETE CASCADE,
+  FOREIGN KEY (TypeName) REFERENCES Type(Name) ON DELETE CASCADE
 );
 
 
@@ -43,7 +43,7 @@ CREATE TABLE Pokemon_Move (
   PokemonNo   int,
   MoveID      int,
   
-  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No),
-  FOREIGN KEY (MoveID) REFERENCES Move(ID)
+  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No) ON DELETE CASCADE,
+  FOREIGN KEY (MoveID) REFERENCES Move(ID) ON DELETE CASCADE
 );
 

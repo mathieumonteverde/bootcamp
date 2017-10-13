@@ -6,5 +6,15 @@ import javax.ejb.Local;
 
 @Local
 public interface PokemonsManagerLocal {
+   /**
+    * Returns a list of all pokemons
+    * @return a list of all pokemons
+    */
    public List<Pokemon> findAllPokemons();
+   
+   /**
+    * Delete a pokemon by his no
+    * @param no The no that identifies the pokemon
+    */
+   public void deleteByNo(int no);
 }

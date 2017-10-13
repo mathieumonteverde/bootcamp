@@ -26,10 +26,6 @@ public class PokemonsManager implements PokemonsManagerLocal {
    @Resource(lookup = "jdbc/bootcamp")
    private DataSource dataSource;
    
-   /**
-    * Returns a list of all pokemons
-    * @return a list of all pokemons
-    */
    @Override
    public List<Pokemon> findAllPokemons() {
       
@@ -91,5 +87,22 @@ public class PokemonsManager implements PokemonsManagerLocal {
       }
       
       return result;
+   }
+   
+    @Override
+   public void deleteByNo(int no) {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL deletePokemon(?)");
+         preparedStatement.setInt(1, no);
+         preparedStatement.executeUpdate();
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
    }
 }
