@@ -15,12 +15,21 @@ import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
+/**
+ * This class manages pokemons. (CRUD and more)
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
+ */
 @Stateless
 public class PokemonsManager implements PokemonsManagerLocal {
    
    @Resource(lookup = "jdbc/bootcamp")
    private DataSource dataSource;
    
+   /**
+    * Returns a list of all pokemons
+    * @return a list of all pokemons
+    */
    @Override
    public List<Pokemon> findAllPokemons() {
       
@@ -30,7 +39,7 @@ public class PokemonsManager implements PokemonsManagerLocal {
          Connection connection = dataSource.getConnection()
       ) 
       {
-         // Prepare and execute a query
+         // Get all pokemons without join
          ResultSet pokemonRows = 
             connection
                .prepareStatement("CALL findAllPokemons()")
@@ -42,8 +51,9 @@ public class PokemonsManager implements PokemonsManagerLocal {
             // Get pokemon no
             int no = pokemonRows.getInt("No");
 
-            // Get all moves
-            PreparedStatement moveStatement = connection.prepareStatement("CALL findMovesByPokemon(?)");
+            // Get all moves of the pokemon
+            PreparedStatement moveStatement = 
+               connection.prepareStatement("CALL findMovesByPokemon(?)");
             moveStatement.setInt(1, no);
             ResultSet moveRows = moveStatement.executeQuery();
 
@@ -55,8 +65,9 @@ public class PokemonsManager implements PokemonsManagerLocal {
                moves.add(new Move(id, name));
             }
             
-            // Get all types
-            PreparedStatement typeStatement = connection.prepareStatement("CALL findTypesByPokemon(?)");
+            // Get all types of the pokemon
+            PreparedStatement typeStatement = 
+               connection.prepareStatement("CALL findTypesByPokemon(?)");
             typeStatement.setInt(1, no);
             ResultSet typeRows = typeStatement.executeQuery();
             
@@ -70,10 +81,8 @@ public class PokemonsManager implements PokemonsManagerLocal {
             
             // Create pokemon
             String name = pokemonRows.getString("Name");
-            
             result.add(new Pokemon(no, name, moves, types));
          }
-         
          
       } catch (SQLException ex) {
          Logger.getLogger(
@@ -83,5 +92,4 @@ public class PokemonsManager implements PokemonsManagerLocal {
       
       return result;
    }
-   
 }
