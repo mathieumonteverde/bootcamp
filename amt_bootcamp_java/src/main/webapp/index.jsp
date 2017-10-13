@@ -3,19 +3,13 @@
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Online Pokedex</title>
-
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="/amt_bootcamp_java-1.0-SNAPSHOT/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="/amt_bootcamp_java-1.0-SNAPSHOT/css/bootstrap-theme.min.css" />
       
-      <!-- Custom App CSS -->
-      <link rel="stylesheet" href="/amt_bootcamp_java-1.0-SNAPSHOT/css/utils.css" />
-      <link rel="stylesheet" href="/amt_bootcamp_java-1.0-SNAPSHOT/css/home.css" />
-
-      <!-- Latest compiled and minified JavaScript -->
-      <script src="/amt_bootcamp_java-1.0-SNAPSHOT/js/bootstrap.min.js"></script>
+      <jsp:include page="./WEB-INF/views/parts/htmlHead.jsp" />
    </head>
    <body>
+      
+      <jsp:include page="./WEB-INF/views/parts/header.jsp" />
+      
       <section class="container-fluid">
          <section id="home-cover" class="row text-center">
             <div class="cover col-md-12">
@@ -32,5 +26,7 @@
             </article>
          </section>
       </section>
+                
+      <jsp:include page="./WEB-INF/views/parts/footer.jsp" />
    </body>
 </html>
