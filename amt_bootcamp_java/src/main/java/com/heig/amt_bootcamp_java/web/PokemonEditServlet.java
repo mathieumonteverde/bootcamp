@@ -39,8 +39,8 @@ public class PokemonEditServlet extends HttpServlet {
          
          Pokemon pokemon = new Pokemon(pokemonName,
                  new String[]{"Lightning"},
-                 new Pokemon.Type[]{Pokemon.Type.ELECTRIC},
-                 1);
+                 new Pokemon.Type[]{Pokemon.Type.ELECTRIC}
+         );
          request.setAttribute("pokemon", pokemon);
 
          request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);

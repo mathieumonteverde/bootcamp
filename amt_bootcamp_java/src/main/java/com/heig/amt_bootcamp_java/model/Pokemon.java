@@ -34,13 +34,11 @@ public class Pokemon {
    private String name;
    private String[] moves;
    private Type[] types;
-   private int level;
 
-   public Pokemon(String name, String[] moves, Type[] types, int level) {
+   public Pokemon(String name, String[] moves, Type[] types) {
       this.name = name;
       this.moves = moves;
       this.types = types;
-      this.level = level;
    }
 
    public String getName() {
@@ -55,10 +53,6 @@ public class Pokemon {
       return types;
    }
 
-   public int getLevel() {
-      return level;
-   }
-
    public void setName(String name) {
       this.name = name;
    }
@@ -69,9 +63,5 @@ public class Pokemon {
 
    public void setTypes(Type[] types) {
       this.types = types;
-   }
-
-   public void setLevel(int level) {
-      this.level = level;
    }
 }
