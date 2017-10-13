@@ -58,7 +58,7 @@ public class PokemonsManager implements PokemonsManagerLocal {
             // Get all types
             PreparedStatement typeStatement = connection.prepareStatement("CALL findTypesByPokemon(?)");
             typeStatement.setInt(1, no);
-            ResultSet typeRows = moveStatement.executeQuery();
+            ResultSet typeRows = typeStatement.executeQuery();
             
             ArrayList<Type> types = new ArrayList<>();
             while(typeRows.next()) {

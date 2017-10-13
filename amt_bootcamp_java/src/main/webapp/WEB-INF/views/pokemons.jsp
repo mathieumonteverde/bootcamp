@@ -50,15 +50,21 @@
                               <td>${pokemon.no}</td>
                               <td>${pokemon.name}</td>
                               <td>
-                                 <c:forEach items="${pokemon.moves}" var="move">
+                                 <c:forEach items="${pokemon.moves}" var="move" varStatus = "status">
                                     ${move.name} 
+                                    ${status.last ? '' : '-'}
                                  </c:forEach>
                               </td>
-                              <td>Normal - Electric</td>
                               <td>
-                                 <a href="${pageContext.request.contextPath}/pokemons/edit?pokemon=pokemonName" title="Edit">Edit</a>
+                                <c:forEach items="${pokemon.types}" var="type" varStatus = "status">
+                                    ${type.name} 
+                                    ${status.last ? '' : '-'}
+                                 </c:forEach>
+                              </td>
+                              <td>
+                                 <a href="${pageContext.request.contextPath}/pokemons/edit?pokemon=${pokemon.no}" title="Edit">Edit</a>
                                  |
-                                 <a href="${pageContext.request.contextPath}/pokemons/delete?pokemon=pokemonName" title="Delete">Delete</a>
+                                 <a href="${pageContext.request.contextPath}/pokemons/delete?pokemon=${pokemon.no}" title="Delete">Delete</a>
                               </td>
                            </tr>
                         </c:forEach>
