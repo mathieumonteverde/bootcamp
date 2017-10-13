@@ -5,8 +5,11 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
+import com.heig.amt_bootcamp_java.model.Move;
 import com.heig.amt_bootcamp_java.model.Pokemon;
+import com.heig.amt_bootcamp_java.model.Type;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,9 +40,11 @@ public class PokemonEditServlet extends HttpServlet {
          
          // TODO Fetch check input and fetch corresponding pokemon model
          
-         Pokemon pokemon = new Pokemon(pokemonName,
-                 new String[]{"Lightning"},
-                 new Pokemon.Type[]{Pokemon.Type.ELECTRIC}
+         Pokemon pokemon = new Pokemon(
+            1, 
+            pokemonName,
+            Arrays.asList(new Move(1, "Cut")),
+            Arrays.asList(new Type("Water"))
          );
          request.setAttribute("pokemon", pokemon);
 

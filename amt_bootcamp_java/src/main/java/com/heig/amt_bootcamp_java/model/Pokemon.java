@@ -1,5 +1,7 @@
 package com.heig.amt_bootcamp_java.model;
 
+import java.util.List;
+
 /**
  * @author Mathieu Monteverde, Sathiya Kirushnapillai
  * @file Pokemon.java
@@ -10,58 +12,47 @@ package com.heig.amt_bootcamp_java.model;
  */
 public class Pokemon {
    
-   public enum Type {
-      NORMAL,
-      FIRE,
-      WATER, 
-      ELECTRIC,
-      GRASS, 
-      ICE, 
-      FIGHTING,
-      POISON,
-      GROUND,
-      FLYING,
-      PSYCHIC,
-      BUG,
-      ROCK,
-      GHOST,
-      DRAGON,
-      DARK,
-      STEEL, 
-      FAIRY
-   }
-
+   private int no;
    private String name;
-   private String[] moves;
-   private Type[] types;
+   private List<Move> moves;
+   private List<Type> types;
 
-   public Pokemon(String name, String[] moves, Type[] types) {
+   public Pokemon(int no, String name, List<Move> moves, List<Type> types) {
+      this.no = no;
       this.name = name;
       this.moves = moves;
       this.types = types;
+   }
+   
+   public int getNo() {
+      return no;
    }
 
    public String getName() {
       return name;
    }
 
-   public String[] getMoves() {
+   public List<Move> getMoves() {
       return moves;
    }
 
-   public Type[] getTypes() {
+   public List<Type> getTypes() {
       return types;
+   }
+   
+   public void setNo(int no) {
+      this.no = no;
    }
 
    public void setName(String name) {
       this.name = name;
    }
 
-   public void setMoves(String[] moves) {
+   public void setMoves(List<Move> moves) {
       this.moves = moves;
    }
 
-   public void setTypes(Type[] types) {
+   public void setTypes(List<Type> types) {
       this.types = types;
    }
 }
