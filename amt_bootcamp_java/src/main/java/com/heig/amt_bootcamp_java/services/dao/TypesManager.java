@@ -32,16 +32,16 @@ public class TypesManager implements TypesManagerLocal {
          Connection connection = dataSource.getConnection()
       ) 
       {
-         // Get all pokemons without join
+         // Get all type without join
          ResultSet typeRows = 
             connection
-               .prepareStatement("CALL findAllPokemons()")
+               .prepareStatement("CALL findAllTypes()")
                .executeQuery();
                   
-         // For each pokemon
+         // For each type
          while(typeRows.next()) {
             
-            // Create pokemon
+            // Create type
             String name = typeRows.getString("Name");
             result.add(new Type(name));
          }
