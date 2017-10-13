@@ -7,6 +7,20 @@ BEGIN
   SELECT * FROM Pokemon;
 END //
 
+-- Find all types
+DELIMITER //
+CREATE PROCEDURE findAllTypes ()
+BEGIN
+  SELECT * FROM Type;
+END //
+
+-- Find all moves
+DELIMITER //
+CREATE PROCEDURE findAllMoves ()
+BEGIN
+  SELECT * FROM Move;
+END //
+
 -- Find all moves of a pokemon
 DELIMITER //
 CREATE PROCEDURE findMovesByPokemon (IN pokemonNo INT)
@@ -25,6 +39,14 @@ BEGIN
   INNER JOIN Pokemon_Type ON Pokemon_Type.PokemonNo = Pokemon.No
   INNER JOIN Type ON Pokemon_Type.TypeName = Type.Name
   WHERE Pokemon.No = pokemonNo;
+END //
+
+
+-- Add pokemon
+DELIMITER //
+CREATE PROCEDURE addPokemon (IN pokemonNo INT)
+BEGIN
+
 END //
 
 
