@@ -5,11 +5,9 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
-import com.heig.amt_bootcamp_java.model.Move;
-import com.heig.amt_bootcamp_java.model.Pokemon;
-import com.heig.amt_bootcamp_java.model.Type;
+import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
 import java.io.IOException;
-import java.util.Arrays;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PokemonServlet extends HttpServlet {
 
+   @EJB
+   private PokemonsManagerLocal pokemonsManager;
 
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+   
    /**
     * Handles the HTTP <code>GET</code> method.
     *
@@ -33,16 +33,11 @@ public class PokemonServlet extends HttpServlet {
     */
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
+           throws ServletException, IOException 
+   {
       
-      Pokemon pikachu = new Pokemon(
-         1, 
-         "Pikachu",
-         Arrays.asList(new Move(1, "Lightning")),
-         Arrays.asList(new Type("Electric"))
-      );
-      
-      request.setAttribute("pokemon", pikachu);
+      response.setContentType("text/html;charset=UTF-8");
+      request.setAttribute("pokemons", pokemonsManager.findAllPokemons());
       request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
       
    }

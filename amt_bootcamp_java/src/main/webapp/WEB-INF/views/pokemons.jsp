@@ -4,6 +4,7 @@
     Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,6 +37,7 @@
                   <table class="table" class="text-left">
                      <thead>
                         <tr>
+                           <th>No</th>
                            <th>Name</th>
                            <th>Moves</th>
                            <th>Types</th>
@@ -43,19 +45,27 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <td>${requestScope.pokemon.name}</td>
-                           <td>Lightning - Headbump</td>
-                           <td>Normal - Electric</td>
-                           <td>
-                              <a href="${pageContext.request.contextPath}/pokemons/edit?pokemon=pokemonName" title="Edit">Edit</a>
-                              |
-                              <a href="${pageContext.request.contextPath}/pokemons/delete?pokemon=pokemonName" title="Delete">Delete</a>
-                           </td>
-                        </tr>
+                        <c:forEach items="${pokemons}" var="pokemon">
+                           <tr>
+                              <td>${pokemon.no}</td>
+                              <td>${pokemon.name}</td>
+                              <td>
+                                 <c:forEach items="${pokemon.moves}" var="move">
+                                    ${move.name} 
+                                 </c:forEach>
+                              </td>
+                              <td>Normal - Electric</td>
+                              <td>
+                                 <a href="${pageContext.request.contextPath}/pokemons/edit?pokemon=pokemonName" title="Edit">Edit</a>
+                                 |
+                                 <a href="${pageContext.request.contextPath}/pokemons/delete?pokemon=pokemonName" title="Delete">Delete</a>
+                              </td>
+                           </tr>
+                        </c:forEach>
                      <tbody>
                      <tfoot>
                         <tr>
+                           <th>No</th>
                            <th>Name</th>
                            <th>Moves</th>
                            <th>Types</th>
