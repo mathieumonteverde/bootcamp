@@ -33,6 +33,10 @@
                <!-- Form to Add the Pokemon -->
                <form class="text-left" action="${pageContext.request.contextPath}/pokemons/add" method="POST">
                   <div class="form-group row">
+                     <input type="text" class="form-control" id="pokemonNo" name="pokemonNo" placeholder="Pokemon no..." />
+                  </div>
+                  
+                  <div class="form-group row">
                      <input type="text" class="form-control" id="pokemonName" name="pokemonName" placeholder="Pokemon name..." />
                   </div>
                   
