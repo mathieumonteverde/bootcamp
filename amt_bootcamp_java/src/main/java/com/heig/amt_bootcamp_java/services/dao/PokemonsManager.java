@@ -26,6 +26,54 @@ public class PokemonsManager implements PokemonsManagerLocal {
    @Resource(lookup = "jdbc/bootcamp")
    private DataSource dataSource;
    
+   
+   @Override
+   public void add(List<Pokemon> pokemons) {
+
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         connection.setAutoCommit(false);
+         
+         // For each pokemon
+         for(Pokemon pokemon : pokemons) {
+            
+            PreparedStatement addPokemon = 
+               connection.prepareStatement("CALL addPokemon(?, ?)");
+            addPokemon.setInt(1, pokemon.getNo());
+            addPokemon.setString(2, pokemon.getName());
+            addPokemon.executeQuery();
+            
+            // For each move
+            for(Move m : pokemon.getMoves()) {
+               PreparedStatement p = 
+                  connection.prepareStatement("CALL addMoveToPokemon(?, ?)");
+               p.setInt(1, pokemon.getNo());
+               p.setInt(2, m.getId());
+               p.executeQuery();
+            }
+            
+            // For each type
+            for(Type t : pokemon.getTypes()) {
+               PreparedStatement p = 
+                  connection.prepareStatement("CALL addTypeToPokemon(?, ?)");
+               p.setInt(1, pokemon.getNo());
+               p.setString(2, t.getName());
+               p.executeQuery();
+            }
+            
+            connection.commit();
+         }
+         
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
+   
    @Override
    public List<Pokemon> findAll() {
       
@@ -89,7 +137,23 @@ public class PokemonsManager implements PokemonsManagerLocal {
       return result;
    }
    
-    @Override
+   @Override
+   public void deleteAll() {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL deleteAllPokemon()");
+         preparedStatement.executeUpdate();
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
+   
+   @Override
    public void deleteByNo(int no) {
       try (
          Connection connection = dataSource.getConnection()
