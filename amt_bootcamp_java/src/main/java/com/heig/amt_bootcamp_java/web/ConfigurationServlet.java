@@ -125,9 +125,7 @@ public class ConfigurationServlet extends HttpServlet {
       
       // Redirection
       // TODO : Redirect with a message
-      RequestDispatcher dispatcher = 
-         request.getRequestDispatcher("/pokemons");
-      dispatcher.forward(request, response);
+      response.sendRedirect(request.getContextPath() + "/pokemons");
    }
 
    /**
