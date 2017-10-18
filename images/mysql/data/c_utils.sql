@@ -25,20 +25,18 @@ END //
 DELIMITER //
 CREATE PROCEDURE findMovesByPokemon (IN pokemonNo INT)
 BEGIN
-  SELECT Move.ID, Move.Name FROM Pokemon
-  INNER JOIN Pokemon_Move ON Pokemon_Move.PokemonNo = Pokemon.No
-  INNER JOIN Move ON Pokemon_Move.MoveID = Move.ID
-  WHERE Pokemon.No = pokemonNo;
+  SELECT Move.ID, Move.Name FROM Move
+  INNER JOIN Pokemon_Move ON Pokemon_Move.MoveID = Move.ID
+  WHERE Pokemon_Move.PokemonNo = pokemonNo;
 END //
 
 -- Find all types of a pokemon
 DELIMITER //
 CREATE PROCEDURE findTypesByPokemon (IN pokemonNo INT)
 BEGIN
-  SELECT Type.Name FROM Pokemon
-  INNER JOIN Pokemon_Type ON Pokemon_Type.PokemonNo = Pokemon.No
-  INNER JOIN Type ON Pokemon_Type.TypeName = Type.Name
-  WHERE Pokemon.No = pokemonNo;
+  SELECT Type.Name FROM Type
+  INNER JOIN Pokemon_Type ON Pokemon_Type.TypeName = Type.Name
+  WHERE Pokemon_Type.PokemonNo = pokemonNo;
 END //
 
 
