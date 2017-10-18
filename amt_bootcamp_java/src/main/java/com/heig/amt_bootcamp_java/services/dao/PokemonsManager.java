@@ -75,7 +75,32 @@ public class PokemonsManager implements PokemonsManagerLocal {
    }
    
    @Override
-   public List<Pokemon> findAll() {
+   public int count() {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         // Get the number of pokemon
+         ResultSet rows = 
+            connection
+               .prepareStatement("CALL countPokemons()")
+               .executeQuery();
+         
+         if(rows.next()) {
+            return rows.getInt(1);
+         }
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+      
+      return 0;
+   }
+   
+   @Override
+   public List<Pokemon> findAll(int limit, int offset) {
       
       List<Pokemon> result = new ArrayList<>();
       
@@ -84,10 +109,11 @@ public class PokemonsManager implements PokemonsManagerLocal {
       ) 
       {
          // Get all pokemons without join
-         ResultSet pokemonRows = 
-            connection
-               .prepareStatement("CALL findAllPokemons()")
-               .executeQuery();
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL findAllPokemons(?, ?)");
+         preparedStatement.setInt(1, limit);
+         preparedStatement.setInt(2, offset);
+         ResultSet pokemonRows = preparedStatement.executeQuery();
                   
          // For each pokemon
          while(pokemonRows.next()) {

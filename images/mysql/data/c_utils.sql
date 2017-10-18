@@ -1,10 +1,18 @@
 USE Bootcamp;
 
+-- Count pokemon
+DELIMITER //
+CREATE PROCEDURE countPokemons ()
+BEGIN
+  SELECT Count(No) FROM Pokemon;
+END //
+
 -- Find all pokemons
 DELIMITER //
-CREATE PROCEDURE findAllPokemons ()
+CREATE PROCEDURE findAllPokemons (IN l INT, IN o INT)
 BEGIN
-  SELECT * FROM Pokemon;
+  SELECT * FROM Pokemon 
+  LIMIT l OFFSET o;
 END //
 
 -- Find all types

@@ -18,10 +18,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author mathieu
  */
 public class PokemonServlet extends HttpServlet {
+   
+   public static final int POKEMONS_PER_PAGE = 5;
 
    @EJB
    private PokemonsManagerLocal pokemonsManager;
-
    
    /**
     * Handles the HTTP <code>GET</code> method.
@@ -35,11 +36,26 @@ public class PokemonServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException 
    {
+
+      // Get page number
+      int page = 1;
+      try {
+         page = Integer.parseInt(request.getParameter("page"));
+      } catch(NumberFormatException e) {
+         page = 1; // TODO: 404 or error ?
+      }
+      
+      int maxNbPokemon = pokemonsManager.count();
+      int maxNbPage = (int) Math.ceil(maxNbPokemon / POKEMONS_PER_PAGE);
+      
+      // Page limitation
+      if(page < 1 || page > maxNbPage) {
+         // TODO : Display an error message or 404 page
+      }
       
       response.setContentType("text/html;charset=UTF-8");
-      request.setAttribute("pokemons", pokemonsManager.findAll());
+      request.setAttribute("pokemons", pokemonsManager.findAll(POKEMONS_PER_PAGE, (page-1) * POKEMONS_PER_PAGE));
       request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
-      
    }
 
    /**

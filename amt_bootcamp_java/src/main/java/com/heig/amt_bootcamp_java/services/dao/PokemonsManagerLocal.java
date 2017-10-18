@@ -14,10 +14,16 @@ public interface PokemonsManagerLocal {
    public void add(List<Pokemon> pokemons);
    
    /**
+    * Count the number of pokemons
+    * @return The number of pokemons
+    */
+   public int count();
+   
+   /**
     * Returns a list of all pokemons
     * @return a list of all pokemons
     */
-   public List<Pokemon> findAll();
+   public List<Pokemon> findAll(int limit, int offset);
    
    /**
     * Delete pokemons
