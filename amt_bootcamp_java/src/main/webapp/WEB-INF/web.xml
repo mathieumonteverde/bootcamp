@@ -16,6 +16,10 @@
         <servlet-name>PokemonDeleteServlet</servlet-name>
         <servlet-class>com.heig.amt_bootcamp_java.web.PokemonDeleteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConfigurationServlet</servlet-name>
+        <servlet-class>com.heig.amt_bootcamp_java.web.ConfigurationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PokemonServlet</servlet-name>
         <url-pattern>/pokemons</url-pattern>
@@ -35,6 +39,10 @@
         <servlet-name>PokemonDeleteServlet</servlet-name>
         <url-pattern>/pokemons/delete</url-pattern>
         <url-pattern>/pokemons/delete/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfigurationServlet</servlet-name>
+        <url-pattern>/configuration</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
