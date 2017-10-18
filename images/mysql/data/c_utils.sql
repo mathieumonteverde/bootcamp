@@ -42,9 +42,10 @@ END //
 
 -- Add pokemon
 DELIMITER //
-CREATE PROCEDURE addPokemon (IN pokemonNo INT)
+CREATE PROCEDURE addPokemon (IN no INT, IN name varchar(80))
 BEGIN
-
+  INSERT INTO Pokemon
+  VALUES (no, name); 
 END //
 
 
