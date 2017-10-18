@@ -39,7 +39,6 @@ BEGIN
   WHERE Pokemon_Type.PokemonNo = pokemonNo;
 END //
 
-
 -- Add pokemon
 DELIMITER //
 CREATE PROCEDURE addPokemon (IN no INT, IN name varchar(80))
@@ -48,6 +47,21 @@ BEGIN
   VALUES (no, name); 
 END //
 
+-- Add move to a pokemon
+DELIMITER //
+CREATE PROCEDURE addMoveToPokemon (IN pokemonNo INT, IN moveId INT)
+BEGIN
+  INSERT INTO Pokemon_Move
+  VALUES (pokemonNo, moveId); 
+END //
+
+-- Add type to a pokemon
+DELIMITER //
+CREATE PROCEDURE addTypeToPokemon (IN pokemonNo INT, IN typeName varchar(80))
+BEGIN
+  INSERT INTO Pokemon_Type
+  VALUES (pokemonNo, typeName); 
+END //
 
 -- Delete a pokemon
 DELIMITER //
