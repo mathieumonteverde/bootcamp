@@ -70,3 +70,11 @@ BEGIN
   DELETE FROM Pokemon
   WHERE No = pokemonNo;
 END //
+
+-- Delete all pokemon
+DELIMITER //
+CREATE PROCEDURE deleteAllPokemon ()
+BEGIN
+  DELETE FROM Pokemon;
+END //
+
