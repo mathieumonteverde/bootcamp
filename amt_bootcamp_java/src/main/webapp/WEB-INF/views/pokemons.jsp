@@ -16,13 +16,13 @@
       <jsp:include page="./parts/htmlHead.jsp" />
    </head>
    <body>
-      
+
       <jsp:include page="./parts/header.jsp" />
 
       <section class="container-fluid">
          <section class="row text-center">
             <div class="cover col-md-12">
-               
+
             </div>
          </section>
          <section class="row text-center justify-content-md-center">
@@ -56,7 +56,7 @@
                                  </c:forEach>
                               </td>
                               <td>
-                                <c:forEach items="${pokemon.types}" var="type" varStatus = "status">
+                                 <c:forEach items="${pokemon.types}" var="type" varStatus = "status">
                                     ${type.name} 
                                     ${status.last ? '' : '-'}
                                  </c:forEach>
@@ -78,12 +78,30 @@
                            <th>Manage</th>
                         </tr>
                      </tfoot>
-                  </table>
+                  </table> 
                </div>
-            </article>
+               <div class="row"> 
+                  <nav aria-label="Page navigation example" class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                     <ul class="pagination">
+                        <li class="page-item <c:if test="${page eq 1}">disabled </c:if>"><a class="page-link page-previous" href="?page=${page - 1}&pokemonsPerPage=${pokemonsPerPage}">Previous</a></li>
+                           <c:forEach items="${pagesToDisplay}" var="currentPage" varStatus = "status">
+                           <li class="page-item <c:if test="${currentPage eq page}">active</c:if>"><a class="page-link" href="?page=${currentPage}&pokemonsPerPage=${pokemonsPerPage}">${currentPage}</a></li>
+                           </c:forEach>
+                        <li class="page-item <c:if test="${page eq maxNbPage}">disabled </c:if>"><a class="page-link page-next" href="?page=${page + 1}&pokemonsPerPage=${pokemonsPerPage}">Next</a></li>
+                        </ul>
+                     </nav>
+                     <div class="text-right col-xs-4 col-sm-4 col-md-4 col-lg-4">Pokemons per page</div>
+                     <select class="custom-select col-xs-1 col-sm-1 col-md-1 col-lg-1" id="pokemonsPerPageSelect" name="pokemonsPerPage">
+                        <option value="?page=${page}&pokemonsPerPage=5" <c:if test="${pokemonsPerPage eq 5}">selected</c:if>>5</option>
+                        <option value="?page=${page}&pokemonsPerPage=10" <c:if test="${pokemonsPerPage eq 10}">selected</c:if>>10</option>
+                        <option value="?page=${page}&pokemonsPerPage=20" <c:if test="${pokemonsPerPage eq 20}">selected</c:if>>20</option>
+                        <option value="?page=${page}&pokemonsPerPage=50" <c:if test="${pokemonsPerPage eq 50}">selected</c:if>>50</option>
+                     </select>
+                  </div>
+               </article>
+            </section>
          </section>
-      </section>
-                           
-      <jsp:include page="./parts/header.jsp" />
+
+      <jsp:include page="./parts/footer.jsp" />
    </body>
 </html>

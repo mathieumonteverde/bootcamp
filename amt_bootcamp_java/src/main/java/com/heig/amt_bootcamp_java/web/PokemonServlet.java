@@ -7,6 +7,8 @@ package com.heig.amt_bootcamp_java.web;
 
 import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,14 +41,21 @@ public class PokemonServlet extends HttpServlet {
 
       // Get page number
       int page = 1;
+      int pokemonsPerPage = POKEMONS_PER_PAGE;
       try {
          page = Integer.parseInt(request.getParameter("page"));
       } catch(NumberFormatException e) {
          page = 1; // TODO: 404 or error ?
       }
       
+      try {
+         pokemonsPerPage = Integer.parseInt(request.getParameter("pokemonsPerPage"));
+      } catch(NumberFormatException e) {
+         pokemonsPerPage = POKEMONS_PER_PAGE; // TODO: 404 or error ?
+      }
+      
       int maxNbPokemon = pokemonsManager.count();
-      int maxNbPage = (int) Math.ceil(maxNbPokemon / POKEMONS_PER_PAGE);
+      int maxNbPage = (int) Math.ceil(maxNbPokemon / (double)pokemonsPerPage);
       
       // Page limitation
       if(page < 1 || page > maxNbPage) {
@@ -54,7 +63,35 @@ public class PokemonServlet extends HttpServlet {
       }
       
       response.setContentType("text/html;charset=UTF-8");
-      request.setAttribute("pokemons", pokemonsManager.findAll(POKEMONS_PER_PAGE, (page-1) * POKEMONS_PER_PAGE));
+      request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsPerPage, (page-1) * pokemonsPerPage));
+      
+      // Pagination variables
+      request.setAttribute("page", page);
+      request.setAttribute("pokemonsPerPage", pokemonsPerPage);
+      request.setAttribute("maxNbPage", maxNbPage);
+      
+      List pagesToDisplay = new LinkedList();
+      // If possible, add at most the three first pages
+      int pageCount = 1;
+      while (pageCount <= 3 && pageCount <= maxNbPage) {
+         pagesToDisplay.add(pageCount++);
+      }
+      
+      // Then add the current page
+      if (pageCount < page) {
+         pagesToDisplay.add(page);
+         pageCount = page;
+      }
+      
+      // Then if possible, add the last three pages
+      if (pageCount < maxNbPage) {
+         pageCount = maxNbPage - pageCount < 3 ? maxNbPage - pageCount : maxNbPage - 2;
+         while (pageCount <= maxNbPage) {
+            pagesToDisplay.add(pageCount++);
+         }
+      }
+      request.setAttribute("pagesToDisplay", pagesToDisplay);
+      
       request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
    }
 
