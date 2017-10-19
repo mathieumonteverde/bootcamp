@@ -4,7 +4,7 @@ USE Bootcamp;
 
 -- TYPE
 CREATE TABLE Type (
-  Name varchar(25) NOT NULL,
+  Name varchar(80) NOT NULL,
   
   PRIMARY KEY(Name)
 );
@@ -13,7 +13,7 @@ CREATE TABLE Type (
 -- MOVE
 CREATE TABLE Move (
   ID    int             NOT NULL AUTO_INCREMENT,
-  Name  varchar(25)    NOT NULL,
+  Name  varchar(80)    NOT NULL,
   
   PRIMARY KEY(ID)
 );
@@ -22,7 +22,7 @@ CREATE TABLE Move (
 -- POKEMON
 CREATE TABLE Pokemon (
   No    int              NOT NULL,
-  Name  varchar(25)     NOT NULL,
+  Name  varchar(80)     NOT NULL,
   
   PRIMARY KEY(No)
 );
@@ -31,10 +31,10 @@ CREATE TABLE Pokemon (
 -- POKEMON_TYPE
 CREATE TABLE Pokemon_Type (
   PokemonNo     int,
-  TypeName      varchar(25),
+  TypeName      varchar(80),
   
-  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No),
-  FOREIGN KEY (TypeName) REFERENCES Type(Name)
+  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No) ON DELETE CASCADE,
+  FOREIGN KEY (TypeName) REFERENCES Type(Name) ON DELETE CASCADE
 );
 
 
@@ -43,7 +43,7 @@ CREATE TABLE Pokemon_Move (
   PokemonNo   int,
   MoveID      int,
   
-  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No),
-  FOREIGN KEY (MoveID) REFERENCES Move(ID)
+  FOREIGN KEY (PokemonNo) REFERENCES Pokemon(No) ON DELETE CASCADE,
+  FOREIGN KEY (MoveID) REFERENCES Move(ID) ON DELETE CASCADE
 );
 

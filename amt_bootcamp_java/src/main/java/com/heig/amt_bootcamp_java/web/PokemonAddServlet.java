@@ -5,7 +5,10 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
+import com.heig.amt_bootcamp_java.services.dao.MovesManagerLocal;
+import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +19,13 @@ import javax.servlet.http.HttpServletResponse;
  * @author mathieu
  */
 public class PokemonAddServlet extends HttpServlet {
+   
+   @EJB
+   private MovesManagerLocal movesManager;
+   
+   @EJB
+   private TypesManagerLocal typesManager;
 
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /**
     * Handles the HTTP <code>GET</code> method.
     *
@@ -29,7 +37,10 @@ public class PokemonAddServlet extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-
+      
+      response.setContentType("text/html;charset=UTF-8");
+      request.setAttribute("types", typesManager.findAll());
+      request.setAttribute("moves", movesManager.findAll());
       request.getRequestDispatcher("/WEB-INF/views/pokemonAdd.jsp").forward(request, response);
    }
 
@@ -54,6 +65,6 @@ public class PokemonAddServlet extends HttpServlet {
    @Override
    public String getServletInfo() {
       return "Short description";
-   }// </editor-fold>
+   }
 
 }

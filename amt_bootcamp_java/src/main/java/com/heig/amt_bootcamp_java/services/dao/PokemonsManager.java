@@ -15,14 +15,92 @@ import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
+/**
+ * This class manages pokemons. (CRUD and more)
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
+ */
 @Stateless
 public class PokemonsManager implements PokemonsManagerLocal {
    
    @Resource(lookup = "jdbc/bootcamp")
    private DataSource dataSource;
    
+   
    @Override
-   public List<Pokemon> findAllPokemons() {
+   public void add(List<Pokemon> pokemons) {
+
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         connection.setAutoCommit(false);
+         
+         // For each pokemon
+         for(Pokemon pokemon : pokemons) {
+            
+            PreparedStatement addPokemon = 
+               connection.prepareStatement("CALL addPokemon(?, ?)");
+            addPokemon.setInt(1, pokemon.getNo());
+            addPokemon.setString(2, pokemon.getName());
+            addPokemon.executeQuery();
+            
+            // For each move
+            for(Move m : pokemon.getMoves()) {
+               PreparedStatement p = 
+                  connection.prepareStatement("CALL addMoveToPokemon(?, ?)");
+               p.setInt(1, pokemon.getNo());
+               p.setInt(2, m.getId());
+               p.executeQuery();
+            }
+            
+            // For each type
+            for(Type t : pokemon.getTypes()) {
+               PreparedStatement p = 
+                  connection.prepareStatement("CALL addTypeToPokemon(?, ?)");
+               p.setInt(1, pokemon.getNo());
+               p.setString(2, t.getName());
+               p.executeQuery();
+            }
+            
+            connection.commit();
+         }
+         
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
+   
+   @Override
+   public int count() {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         // Get the number of pokemon
+         ResultSet rows = 
+            connection
+               .prepareStatement("CALL countPokemons()")
+               .executeQuery();
+         
+         if(rows.next()) {
+            return rows.getInt(1);
+         }
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+      
+      return 0;
+   }
+   
+   @Override
+   public List<Pokemon> findAll(int limit, int offset) {
       
       List<Pokemon> result = new ArrayList<>();
       
@@ -30,11 +108,12 @@ public class PokemonsManager implements PokemonsManagerLocal {
          Connection connection = dataSource.getConnection()
       ) 
       {
-         // Prepare and execute a query
-         ResultSet pokemonRows = 
-            connection
-               .prepareStatement("CALL findAllPokemons()")
-               .executeQuery();
+         // Get all pokemons without join
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL findAllPokemons(?, ?)");
+         preparedStatement.setInt(1, limit);
+         preparedStatement.setInt(2, offset);
+         ResultSet pokemonRows = preparedStatement.executeQuery();
                   
          // For each pokemon
          while(pokemonRows.next()) {
@@ -42,8 +121,9 @@ public class PokemonsManager implements PokemonsManagerLocal {
             // Get pokemon no
             int no = pokemonRows.getInt("No");
 
-            // Get all moves
-            PreparedStatement moveStatement = connection.prepareStatement("CALL findMovesByPokemon(?)");
+            // Get all moves of the pokemon
+            PreparedStatement moveStatement = 
+               connection.prepareStatement("CALL findMovesByPokemon(?)");
             moveStatement.setInt(1, no);
             ResultSet moveRows = moveStatement.executeQuery();
 
@@ -55,10 +135,11 @@ public class PokemonsManager implements PokemonsManagerLocal {
                moves.add(new Move(id, name));
             }
             
-            // Get all types
-            PreparedStatement typeStatement = connection.prepareStatement("CALL findTypesByPokemon(?)");
+            // Get all types of the pokemon
+            PreparedStatement typeStatement = 
+               connection.prepareStatement("CALL findTypesByPokemon(?)");
             typeStatement.setInt(1, no);
-            ResultSet typeRows = moveStatement.executeQuery();
+            ResultSet typeRows = typeStatement.executeQuery();
             
             ArrayList<Type> types = new ArrayList<>();
             while(typeRows.next()) {
@@ -70,10 +151,8 @@ public class PokemonsManager implements PokemonsManagerLocal {
             
             // Create pokemon
             String name = pokemonRows.getString("Name");
-            
             result.add(new Pokemon(no, name, moves, types));
          }
-         
          
       } catch (SQLException ex) {
          Logger.getLogger(
@@ -84,4 +163,36 @@ public class PokemonsManager implements PokemonsManagerLocal {
       return result;
    }
    
+   @Override
+   public void deleteAll() {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL deleteAllPokemon()");
+         preparedStatement.executeUpdate();
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
+   
+   @Override
+   public void deleteByNo(int no) {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL deletePokemon(?)");
+         preparedStatement.setInt(1, no);
+         preparedStatement.executeUpdate();
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
 }
