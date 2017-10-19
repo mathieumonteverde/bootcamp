@@ -32,17 +32,22 @@
 
                <!-- Form to Add the Pokemon -->
                <form class="text-left" action="${pageContext.request.contextPath}/pokemons/add" method="POST">
+                  <c:if test="${noError != null}">${noError}</c:if>
                   <div class="form-group row">
                      <input type="text" class="form-control" id="pokemonNo" value="${pokemonNo}" name="pokemonNo" placeholder="Pokemon no..." />
                   </div>
                   
+                  <c:if test="${nameError != null}">${nameError}</c:if>
                   <div class="form-group row">
                      <input type="text" class="form-control" id="pokemonName" value="${pokemonName}" name="pokemonName" placeholder="Pokemon name..." />
                   </div>
                   
                   <%@include file="./parts/typeSelect.jsp"%>
+                  <c:if test="${typesError != null}">${typesError}</c:if>
+                  
 
                   <%@include file="./parts/moveSelect.jsp"%>
+                  <c:if test="${movesError != null}">${movesError}</c:if>
 
                   <div class="row">
                      <input class="btn btn-primary col-xs-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Add pokemon...">

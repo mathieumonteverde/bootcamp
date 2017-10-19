@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,11 @@ public class PokemonsManager implements PokemonsManagerLocal {
    @Resource(lookup = "jdbc/bootcamp")
    private DataSource dataSource;
    
+   
+   @Override
+   public void add(Pokemon pokemon) {
+      add(Arrays.asList(pokemon));
+   }
    
    @Override
    public void add(List<Pokemon> pokemons) {
@@ -100,6 +106,16 @@ public class PokemonsManager implements PokemonsManagerLocal {
    }
    
    @Override
+   public boolean exists(int no) {
+      return findByNo(no) != null;
+   }
+   
+   @Override
+   public boolean exists(String name) {
+      return findByName(name) != null;
+   }
+   
+   @Override
    public List<Pokemon> findAll(int limit, int offset) {
       
       List<Pokemon> result = new ArrayList<>();
@@ -117,41 +133,7 @@ public class PokemonsManager implements PokemonsManagerLocal {
                   
          // For each pokemon
          while(pokemonRows.next()) {
-            
-            // Get pokemon no
-            int no = pokemonRows.getInt("No");
-
-            // Get all moves of the pokemon
-            PreparedStatement moveStatement = 
-               connection.prepareStatement("CALL findMovesByPokemon(?)");
-            moveStatement.setInt(1, no);
-            ResultSet moveRows = moveStatement.executeQuery();
-
-            ArrayList<Move> moves = new ArrayList<>();
-            while(moveRows.next()) {
-               int id = moveRows.getInt("ID");
-               String name = moveRows.getString("name");
-
-               moves.add(new Move(id, name));
-            }
-            
-            // Get all types of the pokemon
-            PreparedStatement typeStatement = 
-               connection.prepareStatement("CALL findTypesByPokemon(?)");
-            typeStatement.setInt(1, no);
-            ResultSet typeRows = typeStatement.executeQuery();
-            
-            ArrayList<Type> types = new ArrayList<>();
-            while(typeRows.next()) {
-               String name = typeRows.getString("name");
-               
-               types.add(new Type(name));
-            }
-            
-            
-            // Create pokemon
-            String name = pokemonRows.getString("Name");
-            result.add(new Pokemon(no, name, moves, types));
+            result.add(getPokemon(connection, pokemonRows));
          }
          
       } catch (SQLException ex) {
@@ -161,6 +143,61 @@ public class PokemonsManager implements PokemonsManagerLocal {
       }
       
       return result;
+   }
+   
+   @Override
+   public Pokemon findByName(String name) {
+      
+      Pokemon pokemon = null;
+      
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         // Get the pokemon
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL findPokemonByName(?)");
+         preparedStatement.setString(1, name);
+         ResultSet rows = preparedStatement.executeQuery();
+         
+         if(rows.next()) {
+            pokemon = getPokemon(connection, rows);
+         }
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+
+      return pokemon;
+   }
+   
+   @Override
+   public Pokemon findByNo(int no) {
+      
+      Pokemon pokemon = null;
+      
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         // Get the pokemon
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL findPokemonByNo(?)");
+         preparedStatement.setInt(1, no);
+         ResultSet rows = preparedStatement.executeQuery();
+         
+         if(rows.next()) {
+            pokemon = getPokemon(connection, rows);
+         }
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+
+      return pokemon;
    }
    
    @Override
@@ -194,5 +231,51 @@ public class PokemonsManager implements PokemonsManagerLocal {
             PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
          );
       }
+   }
+   
+   /**
+    * Get a pokemon (Method for refactor)
+    * 
+    * @param connection Database connection
+    * @param pokemon Pokemon to get
+    * @return The pokemon
+    * @throws SQLException 
+    */
+   private Pokemon getPokemon(Connection connection, ResultSet pokemon) 
+      throws SQLException 
+   {
+      // Get pokemon no
+      int no = pokemon.getInt("No");
+
+      // Get all moves of the pokemon
+      PreparedStatement moveStatement = 
+         connection.prepareStatement("CALL findMovesByPokemon(?)");
+      moveStatement.setInt(1, no);
+      ResultSet moveRows = moveStatement.executeQuery();
+
+      ArrayList<Move> moves = new ArrayList<>();
+      while(moveRows.next()) {
+         int id = moveRows.getInt("ID");
+         String name = moveRows.getString("name");
+
+         moves.add(new Move(id, name));
+      }
+
+      // Get all types of the pokemon
+      PreparedStatement typeStatement = 
+         connection.prepareStatement("CALL findTypesByPokemon(?)");
+      typeStatement.setInt(1, no);
+      ResultSet typeRows = typeStatement.executeQuery();
+
+      ArrayList<Type> types = new ArrayList<>();
+      while(typeRows.next()) {
+         String name = typeRows.getString("name");
+
+         types.add(new Type(name));
+      }
+      
+      String name = pokemon.getString("Name");
+      
+      return new Pokemon(no, name, moves, types);
    }
 }
