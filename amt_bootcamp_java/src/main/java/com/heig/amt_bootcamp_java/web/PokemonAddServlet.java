@@ -159,7 +159,7 @@ public class PokemonAddServlet extends HttpServlet {
          catch(NumberFormatException e) {}
       }
       
-      if(moves.size() <= 0 || moves.size() > 3) {
+      if(moves.size() <= 0 || moves.size() > 4) {
          movesError = "Must fill in one move at least and max 4";
       }
       
