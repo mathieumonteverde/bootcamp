@@ -8,6 +8,7 @@ header {
    left: 20px;
    top: 20px;
    background-color: white;
+   z-index: 1000;
 }
 
 /* Basic cover */

@@ -50,7 +50,9 @@ public class PokemonDeleteServlet extends HttpServlet {
          
       } catch(NumberFormatException e) {
          // Display an error message
-         request.setAttribute("title", "Select Pokemon to delete");
+         request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsManager.count(), 0));
+         
+         request.setAttribute("title", "Select the Pokemon to delete");
          request.setAttribute("actionUrl", "/pokemons/delete");
          request.setAttribute("submitText", "Delete...");
          request
