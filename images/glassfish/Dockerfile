@@ -14,4 +14,6 @@ asadmin --interactive=false --user admin --passwordfile=/tmp/glassfishpwd create
 
 RUN ./glassfish4/bin/asadmin stop-domain domainAMT
 
+ADD app/amt_bootcamp_java-1.0-SNAPSHOT.war /glassfish4/glassfish/domains/domainAMT/autodeploy/
+
 CMD ["asadmin", "start-domain", "-v", "domainAMT"]
