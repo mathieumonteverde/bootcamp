@@ -21,7 +21,7 @@
       </ul>
    </nav>
    <div class="text-pagination text-right col-xs-2 col-sm-2 col-md-2 col-lg-2">Lines</div>
-   <select class="custom-select col-xs-1 col-sm-1 col-md-1 col-lg-1" id="pokemonsPerPageSelect" name="pokemonsPerPage">
+   <select class="pokemonsPerPageSelect custom-select col-xs-1 col-sm-1 col-md-1 col-lg-1" name="pokemonsPerPage">
       <option value="?page=${page}&pokemonsPerPage=5" <c:if test="${pokemonsPerPage eq 5}">selected</c:if>>5</option>
       <option value="?page=${page}&pokemonsPerPage=10" <c:if test="${pokemonsPerPage eq 10}">selected</c:if>>10</option>
       <option value="?page=${page}&pokemonsPerPage=20" <c:if test="${pokemonsPerPage eq 20}">selected</c:if>>20</option>
