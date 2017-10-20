@@ -22,7 +22,7 @@
                <h2>Errooooooor 404</h2>
 
                <a href="/amt_bootcamp_java-1.0-SNAPSHOT/" class="btn btn-primary">Home</a>
-               <a href="/amt_bootcamp_java-1.0-SNAPSHOT/pokemon" class="btn btn-secondary">Manage the Pokedex</a>
+               <a href="/amt_bootcamp_java-1.0-SNAPSHOT/pokemons" class="btn btn-secondary">Manage the Pokedex</a>
             </article>
          </section>
       </section>
