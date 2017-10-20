@@ -16,9 +16,9 @@
                
             </div>
          </section>
-         <section class="row text-center">
+         <section class="row text-center home-text">
             <article class="padding-sm col-md-12 col-lg-12">
-               <h1>The Pokedex</h1>
+               <h1>The Pokemon Pokedex</h1>
                <h2>Manage your Pokemon Pokedex !</h2>
 
                <a href="/amt_bootcamp_java-1.0-SNAPSHOT/pokemons" class="btn btn-primary">Manage the Pokedex</a>

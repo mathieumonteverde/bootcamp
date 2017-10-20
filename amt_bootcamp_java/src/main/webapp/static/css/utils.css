@@ -3,13 +3,6 @@
     Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 */
 
-header {
-   position: fixed;
-   left: 20px;
-   top: 20px;
-   background-color: white;
-   z-index: 1000;
-}
 
 /* Basic cover */
 .cover {
@@ -21,6 +14,37 @@ header {
    background-repeat: no-repeat;
    background-attachment: fixed;
    border-bottom: solid 2px #333;
+}
+
+/* Override of buttons */
+
+.btn {
+    border-radius: 0 !important;
+    padding: 1em 1.5em;
+    border: solid 2px;
+    text-shadow: none ïmportant;
+    cursor: pointer;
+}
+
+.btn-primary { 
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    background-image: none !important;
+}
+.btn-primary:hover { 
+    background-color: white !important;
+    color: #007bff !important;
+}
+
+.btn-secondary { 
+    background-color: #bcbcbc;
+    color: white;
+    border-color: #bcbcbc;
+}
+.btn-secondary:hover { 
+    background-color: white !important;
+    color: #bcbcbc !important;
 }
 
 .pagination-separator {

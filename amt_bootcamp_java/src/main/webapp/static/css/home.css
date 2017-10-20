@@ -10,11 +10,13 @@
    height: 70vh;
 }
 
-#home-cover h1 {
+.home-text h1 {
    text-transform: uppercase;
 }
 
-#home-cover h2 {
-   font-size: 1.8em;
+.home-text h2 {
+   font-size: 1.3em;
    font-weight: lighter;
+   color: #bcbcbc;
+   margin-bottom: 30px;
 }

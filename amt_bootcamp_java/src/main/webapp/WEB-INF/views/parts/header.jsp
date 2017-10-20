@@ -1,6 +1,6 @@
 <!-- Header file for header navigation -->
 <header>
-   <ul class="nav">
+   <ul class="nav nav-left">
       <li class="nav-item">
          <a class="nav-link active" href="${pageContext.request.contextPath}/">Home</a>
       </li>
@@ -10,8 +10,14 @@
       <li class="nav-item">
          <a class="nav-link" href="${pageContext.request.contextPath}/configuration">Configuration</a>
       </li>
-      <li class="nav-item">
-         <a class="nav-link" href="${pageContext.request.contextPath}/pokemons/add">Add</a>
+   </ul>
+   
+   <ul class="nav nav-right">
+      <li class="nav-item  add-pokemon-button">
+         <a class="nav-link" href="${pageContext.request.contextPath}/pokemons/add">
+            <%@include  file="plus-icon.html" %>
+            <span class="text">Add a pokemon</span>
+         </a>
       </li>
    </ul>
 </header>
