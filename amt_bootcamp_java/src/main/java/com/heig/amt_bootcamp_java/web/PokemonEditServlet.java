@@ -5,7 +5,9 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
+import com.heig.amt_bootcamp_java.model.Move;
 import com.heig.amt_bootcamp_java.model.Pokemon;
+import com.heig.amt_bootcamp_java.model.Type;
 import com.heig.amt_bootcamp_java.services.dao.MovesManagerLocal;
 import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
 import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
@@ -44,45 +46,53 @@ public class PokemonEditServlet extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      
 
+      // Get the pokemon parameter
+      int pokemonNo = 0;
       try{
-         // If the pokemon parameter is not null (GET method) we show the edit form
-         int pokemonNo = Integer.parseInt(request.getParameter("pokemon"));
-         
-         // Get the pokemon
-         Pokemon pokemon = pokemonsManager.findByNo(pokemonNo);
-         if(pokemon == null) {
-            errorForward(request, response);
-         }
-         
-         request.setAttribute("pokemon", pokemon);
-         
-         // TODO : ADD no and name input
-         // TODO : Match scroll with the get pokemon
-         
-         request.setAttribute("types", typesManager.findAll());
-         request.setAttribute("moves", movesManager.findAll());
-
-         List<String> typeValues = new ArrayList<>();
-         typeValues.add("Type 1");
-         typeValues.add("Type 2");
-         typeValues.add("Type 3");
-         request.setAttribute("typesValues", typeValues);
-
-         List<String> movesValues = new ArrayList<>();
-         movesValues.add("Move 1");
-         movesValues.add("Move 2");
-         movesValues.add("Move 3");
-         movesValues.add("Move 4");
-         request.setAttribute("movesValues", movesValues);
-
-         request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);
+         pokemonNo = Integer.parseInt(request.getParameter("pokemon"));
       } 
       catch(NumberFormatException e) {
-         // If the pokemon is not specified, we show the pokemon selection screen
-         errorForward(request, response);
+         response.sendError(HttpServletResponse.SC_NOT_FOUND);
       }
+         
+      // Get the pokemon
+      Pokemon pokemon = pokemonsManager.findByNo(pokemonNo);
+      if(pokemon == null) {
+         response.sendError(HttpServletResponse.SC_NOT_FOUND);
+      }
+
+
+      // Set attribute for the form
+      request.setAttribute("pokemon", pokemon);
+      request.setAttribute("types", typesManager.findAll());
+      request.setAttribute("moves", movesManager.findAll());
+
+
+      // Set types
+      List<String> typeValues = new ArrayList<>();
+      for(Type t : pokemon.getTypes()) {
+         typeValues.add(t.getName());
+      }
+
+      for(int i = typeValues.size(); i < Pokemon.MAX_TYPES; i++) {
+         typeValues.add("Type " + i);
+      }
+      request.setAttribute("typesValues", typeValues);
+
+
+      // Set moves
+      List<String> movesValues = new ArrayList<>();
+      for(Move m : pokemon.getMoves()) {
+         movesValues.add("" + m.getId());
+      }
+
+      for(int i = movesValues.size(); i < Pokemon.MAX_MOVES; i++) {
+         movesValues.add("Move " + i);
+      }
+      request.setAttribute("movesValues", movesValues);
+
+      request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }
 
    /**
@@ -98,19 +108,5 @@ public class PokemonEditServlet extends HttpServlet {
            throws ServletException, IOException {
 
       request.getRequestDispatcher("WEB-INF/views/pokemonEdit.jsp").forward(request, response);
-   }
-
-   private void errorForward(
-      HttpServletRequest request, 
-      HttpServletResponse response) 
-      throws ServletException, IOException 
-   {
-      request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsManager.count(), 0));
-
-      request.setAttribute("title", "Select the Pokemon to edit");
-      request.setAttribute("actionUrl", "/pokemons/edit");
-      request.setAttribute("submitText", "Edit...");
-
-      request.getRequestDispatcher("/WEB-INF/views/pokemonActionSelection.jsp").forward(request, response);
    }
 }
