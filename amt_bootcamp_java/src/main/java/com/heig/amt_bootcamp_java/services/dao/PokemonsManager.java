@@ -201,7 +201,7 @@ public class PokemonsManager implements PokemonsManagerLocal {
    }
    
    @Override
-   public void generatePokemons(int nbPokemon, int nbTypesPerPoke, int nbMovesPerPoke) {
+   public void generatePokemons(int nbPokemon, int maxTypesPerPoke, int maxMovesPerPoke) {
       try (
          Connection connection = dataSource.getConnection()
       ) 
@@ -210,8 +210,8 @@ public class PokemonsManager implements PokemonsManagerLocal {
          PreparedStatement preparedStatement = 
             connection.prepareStatement("CALL pokemonGenerator(?, ?, ?)");
          preparedStatement.setInt(1, nbPokemon);
-         preparedStatement.setInt(2, nbTypesPerPoke);
-         preparedStatement.setInt(3, nbMovesPerPoke);
+         preparedStatement.setInt(2, maxTypesPerPoke);
+         preparedStatement.setInt(3, maxMovesPerPoke);
          preparedStatement.executeQuery();
       } catch (SQLException ex) {
          Logger.getLogger(

@@ -63,10 +63,10 @@ public interface PokemonsManagerLocal {
     * Generate random pokemon
     * 
     * @param nbPokemon Number of pokemon to generate
-    * @param nbTypesPerPoke Number of types per pokemon
-    * @param nbMovesPerPoke Number of moves per pokemon
+    * @param maxTypesPerPoke Max types per pokemon
+    * @param maxMovesPerPoke Max moves per pokemon
     */
-   public void generatePokemons(int nbPokemon, int nbTypesPerPoke, int nbMovesPerPoke);
+   public void generatePokemons(int nbPokemon, int maxTypesPerPoke, int maxMovesPerPoke);
     
    /**
     * Delete pokemons
