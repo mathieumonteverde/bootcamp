@@ -1,0 +1,20 @@
+/* 
+    Created on : 29 sept. 2017, 17:06:17
+    Author     : Mathieu Monteverde, Sathiy Kirushnapillai
+*/
+
+#home-cover {
+}
+
+#home-cover .cover {
+   height: 70vh;
+}
+
+#home-cover h1 {
+   text-transform: uppercase;
+}
+
+#home-cover h2 {
+   font-size: 1.8em;
+   font-weight: lighter;
+}

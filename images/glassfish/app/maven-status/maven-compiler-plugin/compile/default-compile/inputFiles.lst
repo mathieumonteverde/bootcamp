@@ -1,0 +1,15 @@
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/web/PokemonServlet.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/dao/PokemonsManagerLocal.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/web/PokemonEditServlet.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/web/PokemonAddServlet.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/dao/TypesManagerLocal.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/model/Move.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/dao/MovesManagerLocal.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/dao/MovesManager.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/web/PokemonDeleteServlet.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/model/Pokemon.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/dao/TypesManager.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/web/ConfigurationServlet.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/dao/PokemonsManager.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/services/Dummy.java
+/Users/mathieu/Documents/HEIG/semestre5/AMT/projects/bootcamp/amt_bootcamp_java/src/main/java/com/heig/amt_bootcamp_java/model/Type.java
