@@ -60,16 +60,26 @@ public class ConfigurationServlet extends HttpServlet {
    {
       int nbGene = 0;
       
+      String errorMessage = new String();
+      
       try {
          // Gets the number of pokemon to generate
          nbGene = Integer.parseInt(request.getParameter("number"));
-         
-         // TODO : Check the range of the number
-         
+
+         if(nbGene <= 0 || nbGene > 1234567) {
+            errorMessage = "Number of pokemons must be between 1 and 1234567";
+         }
       } catch(NumberFormatException e) {
-         // TODO : Display an error message
+         errorMessage = "Number of pokemons must be between 1 and 1234567";
       }
       
+      // Redirect if number is incorrect
+      if(!errorMessage.isEmpty()) {
+         response.setContentType("text/html;charset=UTF-8");
+         request.setAttribute("errorMessage", errorMessage);
+         request.getRequestDispatcher("/WEB-INF/views/configuration.jsp").forward(request, response);
+         return;
+      }
       
       // Gets all the moves possible
       List<Move> allMoves = movesManager.findAll();
