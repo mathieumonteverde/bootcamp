@@ -61,7 +61,7 @@ public class PokemonAddServlet extends HttpServlet {
       
       List<String> movesValues = new ArrayList<>();
       for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
-         typeValues.add("Move " + i);
+         movesValues.add("Move " + i);
       }
       request.setAttribute("movesValues", movesValues);
       
