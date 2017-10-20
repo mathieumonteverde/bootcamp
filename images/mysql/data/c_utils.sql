@@ -128,10 +128,12 @@ END //
 
 -- Pokemon Generator
 DELIMITER //
-CREATE PROCEDURE pokemonGenerator(IN nbPokemons INT, IN nbTypesPerPoke INT, IN nbMovesPerPoke INT)
+CREATE PROCEDURE pokemonGenerator(IN nbPokemons INT, IN maxTypesPerPoke INT, IN maxMovesPerPoke INT)
 BEGIN
   DECLARE name VARCHAR(255) default '';
   DECLARE no INT default 0;
+  DECLARE maxTypes INT default 0;
+  DECLARE maxMoves INT default 0;
 
   WHILE no < nbPokemons DO
   
@@ -144,12 +146,16 @@ BEGIN
       CALL addPokemon(no, name);
       
       -- Add types
+      SET maxTypes = ROUND((RAND() * (maxTypesPerPoke - 1)) +1);
+      
       INSERT INTO Pokemon_Type (PokemonNo, TypeName) 
-        SELECT DISTINCT no, Type.Name FROM Type ORDER BY RAND() LIMIT nbTypesPerPoke;
+        SELECT DISTINCT no, Type.Name FROM Type ORDER BY RAND() LIMIT maxTypes;
       
       -- Add moves
+      SET maxMoves = ROUND((RAND() * (maxMovesPerPoke - 1)) +1);
+      
       INSERT INTO Pokemon_Move (PokemonNo, MoveID) 
-        SELECT DISTINCT no, ID FROM Move ORDER BY RAND() LIMIT nbMovesPerPoke;
+        SELECT DISTINCT no, ID FROM Move ORDER BY RAND() LIMIT maxMoves;
       
     COMMIT;
     

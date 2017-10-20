@@ -83,10 +83,7 @@ public class ConfigurationServlet extends HttpServlet {
       }
       
       pokemonsManager.deleteAll();
-      
-      int nbTypes = ThreadLocalRandom.current().nextInt(1, Pokemon.MAX_TYPES + 1);
-      int nbMoves = ThreadLocalRandom.current().nextInt(1, Pokemon.MAX_MOVES + 1);
-      pokemonsManager.generatePokemons(nbGene, nbTypes, nbMoves);
+      pokemonsManager.generatePokemons(nbGene, Pokemon.MAX_TYPES, Pokemon.MAX_MOVES);
       
       // Redirection
       // TODO : Redirect with a message
