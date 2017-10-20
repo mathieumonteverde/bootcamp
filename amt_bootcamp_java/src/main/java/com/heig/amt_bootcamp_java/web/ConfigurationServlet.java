@@ -9,6 +9,7 @@ import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -121,11 +122,10 @@ public class ConfigurationServlet extends HttpServlet {
             }
          }
          
-         // Generate a random name
-         int nbCars = ThreadLocalRandom.current().nextInt(3, 13);
-         String name = randomName(nbCars);
+         // Generate an unique name
+         String uuid = UUID.randomUUID().toString();
+         String name = uuid.replaceAll("-", "");
 
-         
          pokemons.add(new Pokemon(i, name, moves, types));
       }
       
