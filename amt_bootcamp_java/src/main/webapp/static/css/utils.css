@@ -23,6 +23,16 @@ header {
    border-bottom: solid 2px #333;
 }
 
+.pagination-separator {
+   width: 40px;
+   padding: .5rem .75rem;
+   background-color: #efefef;
+}
+
+.text-pagination {
+   padding: .5rem .75rem;
+}
+
 /* Full screen height */
 .display-height {
   height: 100vh;
