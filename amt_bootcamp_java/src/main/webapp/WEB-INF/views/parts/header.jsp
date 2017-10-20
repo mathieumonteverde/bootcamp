@@ -13,11 +13,5 @@
       <li class="nav-item">
          <a class="nav-link" href="${pageContext.request.contextPath}/pokemons/add">Add</a>
       </li>
-      <li class="nav-item">
-         <a class="nav-link" href="${pageContext.request.contextPath}/pokemons/edit">Edit</a>
-      </li>
-      <li class="nav-item">
-         <a class="nav-link" href="${pageContext.request.contextPath}/pokemons/delete">Delete</a>
-      </li>
    </ul>
 </header>

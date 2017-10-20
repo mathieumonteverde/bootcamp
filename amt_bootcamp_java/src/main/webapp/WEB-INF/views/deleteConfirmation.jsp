@@ -1,7 +1,7 @@
 <%-- 
     Document   : deleteConfirmation
     Created on : 20 oct. 2017, 19:20:40
-    Author     : mathieu
+    Author     : Mathieu Monteverde & Sathiya kirushnapillai
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,15 +24,18 @@
             </div>
          </section>
          <section class="row text-center">
-            <h1>Confirm Pokemon deletion</h1>
-            <article class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
-               <form id="confirmDelete" action="pokemon/delete" method="POST">
-                  <p>You are about to delete a Pokemon. This action cannot be reverted.</p>
+            <div class="col-xs-01 col-sm-1 col-md-1 col-lg-2"></div>
+            <article class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
+               <h1 class="text-center margin-sm">Confirm Pokemon deletion</h1>
+               <form id="confirmDelete" action="${pageContext.request.contextPath}/pokemons/delete" method="POST">
+                  <p>You are about to delete the Pokemon n°${pokemon.no} <b>${pokemon.name}</b>. This action cannot be reverted.</p>
                   <p> Please confirm your choice</p>
+                  
+                  <input type="text" style="display:none;" name="pokemon" value="${pokemon.no}" />
 
                   <div class="form-check">
                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input">
+                        <input type="checkbox" class="form-check-input" name="notAskAgain">
                         Don't ask me again.
                      </label>
                   </div>
