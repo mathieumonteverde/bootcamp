@@ -57,7 +57,16 @@ public interface PokemonsManagerLocal {
     * @param no No to search
     * @return Returns the found pokemon. Returns null if not found.
     */
-   public Pokemon findByNo(int no);  
+   public Pokemon findByNo(int no);
+   
+   /**
+    * Generate random pokemon
+    * 
+    * @param nbPokemon Number of pokemon to generate
+    * @param nbTypesPerPoke Number of types per pokemon
+    * @param nbMovesPerPoke Number of moves per pokemon
+    */
+   public void generatePokemons(int nbPokemon, int nbTypesPerPoke, int nbMovesPerPoke);
     
    /**
     * Delete pokemons

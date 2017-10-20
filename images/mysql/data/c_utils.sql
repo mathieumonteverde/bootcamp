@@ -126,11 +126,35 @@ BEGIN
   DELETE FROM Pokemon;
 END //
 
+-- Pokemon Generator
+DELIMITER //
+CREATE PROCEDURE pokemonGenerator(IN nbPokemons INT, IN nbTypesPerPoke INT, IN nbMovesPerPoke INT)
+BEGIN
+  DECLARE name VARCHAR(255) default '';
+  DECLARE no INT default 0;
 
-
-
-
-
-
-
+  WHILE no < nbPokemons DO
+  
+    START TRANSACTION;
+    
+      -- Generate name
+      SET name = CONCAT('pokemon_', no);
+      
+      -- Add pokemon
+      CALL addPokemon(no, name);
+      
+      -- Add types
+      INSERT INTO Pokemon_Type (PokemonNo, TypeName) 
+        SELECT DISTINCT no, Type.Name FROM Type ORDER BY RAND() LIMIT nbTypesPerPoke;
+      
+      -- Add moves
+      INSERT INTO Pokemon_Move (PokemonNo, MoveID) 
+        SELECT DISTINCT no, ID FROM Move ORDER BY RAND() LIMIT nbMovesPerPoke;
+      
+    COMMIT;
+    
+    -- Incremente
+    SET no = no + 1;
+  END WHILE;
+END //
 
