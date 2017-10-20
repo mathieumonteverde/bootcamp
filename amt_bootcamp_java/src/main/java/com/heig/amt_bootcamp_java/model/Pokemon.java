@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class Pokemon {
    
+   public static final int MAX_TYPES = 3;
+   public static final int MAX_MOVES = 4;
+   
    private int no;
    private String name;
    private List<Move> moves;

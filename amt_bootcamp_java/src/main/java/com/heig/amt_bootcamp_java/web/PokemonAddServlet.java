@@ -54,16 +54,15 @@ public class PokemonAddServlet extends HttpServlet {
       request.setAttribute("moves", movesManager.findAll());
       
       List<String> typeValues = new ArrayList<>();
-      typeValues.add("Type 1");
-      typeValues.add("Type 2");
-      typeValues.add("Type 3");
+      for(int i = 1; i <= Pokemon.MAX_TYPES; i++) {
+         typeValues.add("Type " + i);
+      }
       request.setAttribute("typesValues", typeValues);
       
       List<String> movesValues = new ArrayList<>();
-      movesValues.add("Move 1");
-      movesValues.add("Move 2");
-      movesValues.add("Move 3");
-      movesValues.add("Move 4");
+      for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
+         typeValues.add("Move " + i);
+      }
       request.setAttribute("movesValues", movesValues);
       
       request.getRequestDispatcher("/WEB-INF/views/pokemonAdd.jsp").forward(request, response);
@@ -86,17 +85,14 @@ public class PokemonAddServlet extends HttpServlet {
       String selectedPokemonName = request.getParameter("pokemonName");
       
       List<String> selectedTypes = new ArrayList<>();
-      selectedTypes.add(request.getParameter("pokemonType1"));
-      selectedTypes.add(request.getParameter("pokemonType2"));
-      selectedTypes.add(request.getParameter("pokemonType3"));
-      
-      
+      for(int i = 1; i <= Pokemon.MAX_TYPES; i++) {
+         selectedTypes.add(request.getParameter("pokemonType" + i));
+      }
+
       List<String> selectedMoves = new ArrayList<>();
-      selectedMoves.add(request.getParameter("pokemonMove1"));
-      selectedMoves.add(request.getParameter("pokemonMove2"));
-      selectedMoves.add(request.getParameter("pokemonMove3"));
-      selectedMoves.add(request.getParameter("pokemonMove4"));
-      
+      for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
+         selectedMoves.add(request.getParameter("pokemonMove" + i));
+      }
 
       // POKEMON NO VALIDATION
       String noError = new String();
@@ -141,8 +137,8 @@ public class PokemonAddServlet extends HttpServlet {
          }
       }
       
-      if(types.size() <= 0 || types.size() > 3) {
-         typesError = "Must fill in one type at least and max 3";
+      if(types.size() <= 0 || types.size() > Pokemon.MAX_TYPES) {
+         typesError = "Must fill in one type at least and max " +  + Pokemon.MAX_TYPES;
       }
       
       
@@ -159,8 +155,8 @@ public class PokemonAddServlet extends HttpServlet {
          catch(NumberFormatException e) {}
       }
       
-      if(moves.size() <= 0 || moves.size() > 4) {
-         movesError = "Must fill in one move at least and max 4";
+      if(moves.size() <= 0 || moves.size() > Pokemon.MAX_MOVES) {
+         movesError = "Must fill in one move at least and max " + Pokemon.MAX_MOVES;
       }
       
       if(noError.isEmpty() && 
