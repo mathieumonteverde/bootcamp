@@ -9,6 +9,12 @@ public interface PokemonsManagerLocal {
    
    /**
     * Add new pokemons
+    * @param pokemon The pokemon to add
+    */
+   public void add(Pokemon pokemon);
+   
+   /**
+    * Add new pokemons
     * @param pokemons The pokemons to add
     */
    public void add(List<Pokemon> pokemons);
@@ -20,11 +26,48 @@ public interface PokemonsManagerLocal {
    public int count();
    
    /**
+    * Return true if the pokemon exists
+    * @param no to find
+    * @return true if the pokemon exists
+    */
+   public boolean exists(int no);
+   
+   /**
+    * Return true if the pokemon exists
+    * @param name to find
+    * @return true if the pokemon exists
+    */
+   public boolean exists(String name);
+   
+   /**
     * Returns a list of all pokemons
     * @return a list of all pokemons
     */
    public List<Pokemon> findAll(int limit, int offset);
    
+   /**
+    * Find pokemon by his name
+    * @param name Name to search
+    * @return Returns the found pokemon. Returns null if not found.
+    */
+   public Pokemon findByName(String name);
+   
+   /**
+    * Find pokemon by his name
+    * @param no No to search
+    * @return Returns the found pokemon. Returns null if not found.
+    */
+   public Pokemon findByNo(int no);
+   
+   /**
+    * Generate random pokemon
+    * 
+    * @param nbPokemon Number of pokemon to generate
+    * @param nbTypesPerPoke Number of types per pokemon
+    * @param nbMovesPerPoke Number of moves per pokemon
+    */
+   public void generatePokemons(int nbPokemon, int nbTypesPerPoke, int nbMovesPerPoke);
+    
    /**
     * Delete pokemons
     */

@@ -2,6 +2,7 @@ package com.heig.amt_bootcamp_java.services.dao;
 
 import com.heig.amt_bootcamp_java.model.Type;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ public class TypesManager implements TypesManagerLocal {
    
    @Resource(lookup = "jdbc/bootcamp")
    private DataSource dataSource;
+   
+   @Override
+   public boolean exists(String name) {
+      return findByName(name) != null;
+   }
    
    @Override
    public List<Type> findAll() {
@@ -53,5 +59,33 @@ public class TypesManager implements TypesManagerLocal {
       }
       
       return result;
+   }
+   
+   @Override
+   public Type findByName(String name) {
+      
+      Type type = null;
+      
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         // Get the type
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL findTypeByName(?)");
+         preparedStatement.setString(1, name);
+         ResultSet rows = preparedStatement.executeQuery();
+         
+         if(rows.next()) {
+            type = new Type(rows.getString("Name"));
+         }
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+
+      return type;
    }
 }

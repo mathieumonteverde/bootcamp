@@ -5,6 +5,7 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
+import com.heig.amt_bootcamp_java.model.Pokemon;
 import com.heig.amt_bootcamp_java.services.dao.MovesManagerLocal;
 import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
 import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
@@ -32,7 +33,6 @@ public class PokemonEditServlet extends HttpServlet {
    @EJB
    private PokemonsManagerLocal pokemonsManager;
 
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /**
     * Handles the HTTP <code>GET</code> method.
     *
@@ -44,17 +44,23 @@ public class PokemonEditServlet extends HttpServlet {
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      String pokemonID = request.getParameter("pokemon");
+      
 
-      if (pokemonID != null) {
+      try{
          // If the pokemon parameter is not null (GET method) we show the edit form
+         int pokemonNo = Integer.parseInt(request.getParameter("pokemon"));
          
-         // TODO get corresponding Pokemon if exists
+         // Get the pokemon
+         Pokemon pokemon = pokemonsManager.findByNo(pokemonNo);
+         if(pokemon == null) {
+            errorForward(request, response);
+         }
          
-         // Pokemon pokemon = pokemonsManager.
+         request.setAttribute("pokemon", pokemon);
          
-         //request.setAttribute("pokemon", pokemon);
-
+         // TODO : ADD no and name input
+         // TODO : Match scroll with the get pokemon
+         
          request.setAttribute("types", typesManager.findAll());
          request.setAttribute("moves", movesManager.findAll());
 
@@ -72,19 +78,11 @@ public class PokemonEditServlet extends HttpServlet {
          request.setAttribute("movesValues", movesValues);
 
          request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);
-      } else {
+      } 
+      catch(NumberFormatException e) {
          // If the pokemon is not specified, we show the pokemon selection screen
-         
-         request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsManager.count(), 0));
-         
-         request.setAttribute("title", "Select the Pokemon to edit");
-         request.setAttribute("actionUrl", "/pokemons/edit");
-         request.setAttribute("submitText", "Edit...");
-         //request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
-
-         request.getRequestDispatcher("/WEB-INF/views/pokemonActionSelection.jsp").forward(request, response);
+         errorForward(request, response);
       }
-
    }
 
    /**
@@ -102,4 +100,17 @@ public class PokemonEditServlet extends HttpServlet {
       request.getRequestDispatcher("WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }
 
+   private void errorForward(
+      HttpServletRequest request, 
+      HttpServletResponse response) 
+      throws ServletException, IOException 
+   {
+      request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsManager.count(), 0));
+
+      request.setAttribute("title", "Select the Pokemon to edit");
+      request.setAttribute("actionUrl", "/pokemons/edit");
+      request.setAttribute("submitText", "Edit...");
+
+      request.getRequestDispatcher("/WEB-INF/views/pokemonActionSelection.jsp").forward(request, response);
+   }
 }

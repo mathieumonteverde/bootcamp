@@ -9,6 +9,7 @@ import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,68 +61,32 @@ public class ConfigurationServlet extends HttpServlet {
    {
       int nbGene = 0;
       
+      String errorMessage = new String();
+      
       try {
          // Gets the number of pokemon to generate
          nbGene = Integer.parseInt(request.getParameter("number"));
-         
-         // TODO : Check the range of the number
-         
+
+         if(nbGene <= 0 || nbGene > 1234567) {
+            errorMessage = "Number of pokemons must be between 1 and 1234567";
+         }
       } catch(NumberFormatException e) {
-         // TODO : Display an error message
+         errorMessage = "Number of pokemons must be between 1 and 1234567";
       }
       
-      
-      // Gets all the moves possible
-      List<Move> allMoves = movesManager.findAll();
-
-      // Gets all the types possible
-      List<Type> allTypes = typesManager.findAll();
-
-      
-      ArrayList<Pokemon> pokemons = new ArrayList<>();
-      for(int i = 0; i < nbGene; i++) {
-         
-         // Set the types (min 1, max 2)
-         ArrayList<Type> types = new ArrayList<>();
-         int nbType = ThreadLocalRandom.current().nextInt(1, 3);
-         for(int t = 0; t < nbType; t++) {
-            int x = ThreadLocalRandom.current().nextInt(0, allTypes.size());
-            Type type = allTypes.get(x);
-            
-            if(types.contains(type)) {
-               t--;
-            }
-            else {
-               types.add(type);
-            }
-         }
-         
-         // Set the moves
-         ArrayList<Move> moves = new ArrayList<>();
-         int nbMove = ThreadLocalRandom.current().nextInt(1, 5);
-         for(int m = 0; m < nbMove; m++) {
-            int x = ThreadLocalRandom.current().nextInt(0, allMoves.size());
-            Move move = allMoves.get(x);
-            
-            if(moves.contains(move)) {
-               m--;
-            }
-            else {
-               moves.add(move);
-            }
-         }
-         
-         // Generate a random name
-         int nbCars = ThreadLocalRandom.current().nextInt(3, 13);
-         String name = randomName(nbCars);
-
-         
-         pokemons.add(new Pokemon(i, name, moves, types));
+      // Redirect if number is incorrect
+      if(!errorMessage.isEmpty()) {
+         response.setContentType("text/html;charset=UTF-8");
+         request.setAttribute("errorMessage", errorMessage);
+         request.getRequestDispatcher("/WEB-INF/views/configuration.jsp").forward(request, response);
+         return;
       }
       
-      // TODO : Transaction ...
       pokemonsManager.deleteAll();
-      pokemonsManager.add(pokemons);
+      
+      int nbTypes = ThreadLocalRandom.current().nextInt(1, Pokemon.MAX_TYPES + 1);
+      int nbMoves = ThreadLocalRandom.current().nextInt(1, Pokemon.MAX_MOVES + 1);
+      pokemonsManager.generatePokemons(nbGene, nbTypes, nbMoves);
       
       // Redirection
       // TODO : Redirect with a message
@@ -136,29 +101,5 @@ public class ConfigurationServlet extends HttpServlet {
    @Override
    public String getServletInfo() {
       return "Short description";
-   }
-   
-   /**
-    * Generate a random alpha name 
-    * TODO : Move this in a class
-    * 
-    * @param length The length of the name
-    * @return the name
-    */
-   private String randomName(int length) {
-      if(length <= 0) {
-         // TODO : Throw an exception...
-         length = 1;
-      }
-      
-      String alpha = "abcdefghijklmnopqrstuvwxyz";
-      StringBuilder name = new StringBuilder();
-      
-      for(int i = 0; i < length; i++) {
-         int index = ThreadLocalRandom.current().nextInt(0, alpha.length());
-         name.append(alpha.charAt(index));
-      }
-      
-      return name.toString();
    }
 }

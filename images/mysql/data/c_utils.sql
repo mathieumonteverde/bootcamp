@@ -15,6 +15,22 @@ BEGIN
   LIMIT l OFFSET o;
 END //
 
+-- Find pokemon by name
+DELIMITER //
+CREATE PROCEDURE findPokemonByName (IN n varchar(80))
+BEGIN
+  SELECT * FROM Pokemon 
+  WHERE Name = n;
+END //
+
+-- Find pokemon by no
+DELIMITER //
+CREATE PROCEDURE findPokemonByNo (IN n INT)
+BEGIN
+  SELECT * FROM Pokemon 
+  WHERE No = n;
+END //
+
 -- Find all types
 DELIMITER //
 CREATE PROCEDURE findAllTypes ()
@@ -22,11 +38,35 @@ BEGIN
   SELECT * FROM Type;
 END //
 
+-- Find type by name
+DELIMITER //
+CREATE PROCEDURE findTypeByName (IN n varchar(80))
+BEGIN
+  SELECT * FROM Type 
+  WHERE Name = n;
+END //
+
 -- Find all moves
 DELIMITER //
 CREATE PROCEDURE findAllMoves ()
 BEGIN
   SELECT * FROM Move;
+END //
+
+-- Find move by name
+DELIMITER //
+CREATE PROCEDURE findMoveByName (IN n varchar(80))
+BEGIN
+  SELECT * FROM Move 
+  WHERE Name = n;
+END //
+
+-- Find move by id
+DELIMITER //
+CREATE PROCEDURE findMoveById (IN n INT)
+BEGIN
+  SELECT * FROM Move 
+  WHERE ID = n;
 END //
 
 -- Find all moves of a pokemon
@@ -84,5 +124,37 @@ DELIMITER //
 CREATE PROCEDURE deleteAllPokemon ()
 BEGIN
   DELETE FROM Pokemon;
+END //
+
+-- Pokemon Generator
+DELIMITER //
+CREATE PROCEDURE pokemonGenerator(IN nbPokemons INT, IN nbTypesPerPoke INT, IN nbMovesPerPoke INT)
+BEGIN
+  DECLARE name VARCHAR(255) default '';
+  DECLARE no INT default 0;
+
+  WHILE no < nbPokemons DO
+  
+    START TRANSACTION;
+    
+      -- Generate name
+      SET name = CONCAT('pokemon_', no);
+      
+      -- Add pokemon
+      CALL addPokemon(no, name);
+      
+      -- Add types
+      INSERT INTO Pokemon_Type (PokemonNo, TypeName) 
+        SELECT DISTINCT no, Type.Name FROM Type ORDER BY RAND() LIMIT nbTypesPerPoke;
+      
+      -- Add moves
+      INSERT INTO Pokemon_Move (PokemonNo, MoveID) 
+        SELECT DISTINCT no, ID FROM Move ORDER BY RAND() LIMIT nbMovesPerPoke;
+      
+    COMMIT;
+    
+    -- Incremente
+    SET no = no + 1;
+  END WHILE;
 END //
 

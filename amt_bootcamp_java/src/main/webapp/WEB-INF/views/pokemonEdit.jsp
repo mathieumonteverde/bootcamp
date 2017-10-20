@@ -33,7 +33,15 @@
                <form class="text-left" action="${pageContext.request.contextPath}/pokemons/edit" method="POST">
                   <!-- Name of the pokemon to edit -->
                   <div class="form-group">
-                     <h2>${requestScope.pokemon.name}</h2>
+                     <h2>${pokemon.name}</h2>
+                  </div>
+                  
+                  <div class="form-group row">
+                     <input type="text" class="form-control" id="pokemonNo" value="${pokemon.no}" name="pokemonNo" placeholder="Pokemon no..." />
+                  </div>
+                  
+                  <div class="form-group row">
+                     <input type="text" class="form-control" id="pokemonName" value="${pokemon.name}" name="pokemonName" placeholder="Pokemon name..." />
                   </div>
                   
                   <%@include file="./parts/typeSelect.jsp"%>

@@ -28,6 +28,11 @@
             <article class="padding-sm col-md-12 col-lg-8">
 
                <h1>Generate pokemons</h1>
+               <c:if test="${errorMessage != null}">
+                  <div class="alert alert-danger" role="alert">
+                     ${errorMessage}
+                  </div>
+               </c:if>
 
                <!-- Form to Add the Pokemon -->
                <form class="text-left" action="${pageContext.request.contextPath}/configuration" method="POST">
