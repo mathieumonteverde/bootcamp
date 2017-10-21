@@ -52,13 +52,17 @@ public class PokemonServlet extends HttpServlet {
       } catch (NumberFormatException e) {
          pokemonsPerPage = POKEMONS_PER_PAGE; // TODO: 404 or error ?
       }
+      
+      if (pokemonsPerPage < 1) {
+         response.sendError(HttpServletResponse.SC_NOT_FOUND);
+      }
 
       int maxNbPokemon = pokemonsManager.count();
       int maxNbPage = (int) Math.ceil(maxNbPokemon / (double) pokemonsPerPage);
 
       // Page limitation
       if (page < 1) {
-         page = 1;
+         response.sendError(HttpServletResponse.SC_NOT_FOUND);
       }
       if (page > maxNbPage) {
          page = maxNbPage;
