@@ -46,17 +46,19 @@
     color: #bcbcbc !important;
 }
 
-.pagination-separator {
-   width: 40px;
-   padding: .5rem .75rem;
-}
-
 /* Tables and pagination */
+.pokemon-list ul li, .text-pagination, .pokemon-list select {
+    font-size: 0.85em;
+}
 .text-pagination {
    padding: .5rem .75rem;
 }
 tr:nth-child(even) {
     background-color: #eee;
+}
+.pagination-separator {
+   width: 40px;
+   padding: .5rem .75rem;
 }
 
 /* Full screen height */

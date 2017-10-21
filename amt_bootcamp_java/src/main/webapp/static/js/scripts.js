@@ -9,6 +9,10 @@ $(document).ready(function() {
       if (url) {
          window.location = url;
       }
-   })
+   });
+   
+   $('.nav-trigger').click(function() {
+      $('header').toggleClass('open');
+   });
 });
 
