@@ -16,12 +16,12 @@ header {
    top: 0px;
    width: 100%;
    z-index: 1000;
-   overflow: auto;
+   overflow: visible;
 }
 
 header .nav-trigger {
    display: none;
-   position: fixed;
+   position: absolute;
    right: 10px;
    top: 10px;
    width: 40px;
