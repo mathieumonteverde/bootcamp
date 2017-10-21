@@ -3,6 +3,9 @@
     Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 */
 
+body {
+   font-family: 'Montserrat', sans-serif;
+}
 
 /* Basic cover */
 .cover {
@@ -20,6 +23,7 @@
 .btn {
     border-radius: 0 !important;
     padding: 1em 1.5em;
+    margin: 0.5em;
     border: solid 2px;
     text-shadow: none ïmportant;
     cursor: pointer;
@@ -61,6 +65,27 @@ tr:nth-child(even) {
    padding: .5rem .75rem;
 }
 
+/* Error 404 */
+
+.container-404 .container-img {
+   width: 100%;
+   padding: 5%;
+}
+.container-404 .container-img img {
+   display: block;
+   width: 100%;
+}
+.container-404 h1 {
+   text-transform: uppercase;
+}
+
+.container-404  h2 {
+   font-size: 1.3em;
+   font-weight: lighter;
+   color: #aaa;
+   margin-bottom: 30px;
+}
+
 /* Full screen height */
 .display-height {
   height: 100vh;
@@ -74,6 +99,11 @@ tr:nth-child(even) {
 /* White background */
 .white-bg {
   background-color: white;
+}
+
+/* Blue background */
+.blue-bg {
+   background-color: #007bff;
 }
 
 /* Pattern backgrounds */

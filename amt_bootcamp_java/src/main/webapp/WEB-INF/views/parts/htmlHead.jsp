@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-theme.min.css" />
