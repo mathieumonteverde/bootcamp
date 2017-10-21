@@ -25,9 +25,9 @@
 
          <!-- Edit pokemon form section -->
          <section class="row text-center justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">
-            <article class="padding-sm col-10 col-sm-10 col-md-10 col-lg-8">
+            <article class="col-10 col-sm-10 col-md-10 col-lg-8">
 
-               <h1>Edit this pokemon</h1>
+               <h1 class="margin-sm">Edit this pokemon</h1>
 
                <!-- Form to Edit the Pokemon -->
                <form class="text-left" action="${pageContext.request.contextPath}/pokemons/edit" method="POST">

@@ -7,6 +7,10 @@ body {
    font-family: 'Montserrat', sans-serif;
 }
 
+h1 {
+   text-transform: uppercase;
+}
+
 /* Basic cover */
 .cover {
    height: 20vh;
@@ -39,6 +43,10 @@ body {
     background-color: white !important;
     color: #007bff !important;
 }
+.btn-primary:focus { 
+    background-color: white !important;
+    color: #007bff !important;
+}
 
 .btn-secondary { 
     background-color: #bcbcbc;
@@ -46,6 +54,10 @@ body {
     border-color: #bcbcbc;
 }
 .btn-secondary:hover { 
+    background-color: white !important;
+    color: #bcbcbc !important;
+}
+.btn-secondary:focus { 
     background-color: white !important;
     color: #bcbcbc !important;
 }

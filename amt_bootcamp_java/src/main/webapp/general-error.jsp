@@ -11,18 +11,19 @@
       <jsp:include page="./WEB-INF/views/parts/header.jsp" />
       
       <section class="container-fluid">
-         <section id="home-cover" class="row text-center">
-            <div class="cover col-md-12">
-               
-            </div>
-         </section>
-         <section class="row text-center">
-            <article class="padding-sm col-md-12 col-lg-12">
-               <h1>The Pokedex</h1>
-               <h2>An error occurred</h2>
+         <section class="row text-center padding-lg justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">
+            <article class="container-404 col-10 col-sm-8 col-md-6 col-lg-6">
+               <div class="box-shadow">
+                  <div class="blue-bg container-img">
+                     <img src="${pageContext.request.contextPath}/static/img/error_white.png" title="" alt="" />
+                  </div>
+                  <div class="padding-sm">
+                     <h1>An error occured...</h1>
+                     <h2>Please come back later...</h2>
 
-               <a href="/amt_bootcamp_java-1.0-SNAPSHOT/" class="btn btn-primary">Home</a>
-               <a href="/amt_bootcamp_java-1.0-SNAPSHOT/pokemons" class="btn btn-secondary">Manage the Pokedex</a>
+                     <a href="${pageContext.request.contextPath}" class="btn btn-primary">Home</a>
+                  </div>
+               </div>
             </article>
          </section>
       </section>
