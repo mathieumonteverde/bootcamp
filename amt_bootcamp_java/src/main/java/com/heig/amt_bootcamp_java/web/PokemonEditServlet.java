@@ -211,8 +211,7 @@ public class PokemonEditServlet extends HttpServlet {
       
       response.setContentType("text/html;charset=UTF-8");
       System.out.println(pokemon.getNo());
-      request.setAttribute("pokemonNo", pokemon.getNo());
-      request.setAttribute("pokemonName", selectedPokemonName);
+      request.setAttribute("pokemon", pokemon);
       request.setAttribute("types", typesManager.findAll());
       request.setAttribute("moves", movesManager.findAll());
       request.setAttribute("typesValues", selectedTypes);
@@ -224,6 +223,6 @@ public class PokemonEditServlet extends HttpServlet {
       request.setAttribute("movesError", movesError);
       
 
-      request.getRequestDispatcher("WEB-INF/views/pokemonEdit.jsp").forward(request, response);
+      request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }
 }
