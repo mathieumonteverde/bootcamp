@@ -26,4 +26,10 @@ public interface TypesManagerLocal {
     * @return Return the found type. Returns null if not found.
     */
    public Type findByName(String name);
+   
+   /**
+    * Delete moves by pokemon no
+    * @param no to search and delete
+    */
+   public void deleteByNo(int no);
 }

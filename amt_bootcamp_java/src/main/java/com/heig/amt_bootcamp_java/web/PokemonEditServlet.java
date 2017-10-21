@@ -106,6 +106,123 @@ public class PokemonEditServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
+      
+      // Get the POST submitted data
+      String selectedPokemonNo = request.getParameter("pokemonNo");
+      String selectedPokemonName = request.getParameter("pokemonName");
+      
+      List<String> selectedTypes = new ArrayList<>();
+      for(int i = 1; i <= Pokemon.MAX_TYPES; i++) {
+         selectedTypes.add(request.getParameter("pokemonType" + i));
+      }
+
+      List<String> selectedMoves = new ArrayList<>();
+      for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
+         selectedMoves.add(request.getParameter("pokemonMove" + i));
+      }
+      
+      
+      // POKEMON NO VALIDATION
+      Pokemon pokemon = null;
+      try {
+         int no = Integer.parseInt(selectedPokemonNo);
+         
+         // Check for negative number
+         if(0 > no) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+         }
+         
+         pokemon = pokemonsManager.findByNo(no);
+         if(pokemon == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+         }
+      }
+      catch(NumberFormatException e) {
+         response.sendError(HttpServletResponse.SC_NOT_FOUND);
+         return;
+      }
+
+      
+      // POKEMON NAME VALIDATION
+      String nameError = new String();
+      
+      // Check for empty name
+      if(selectedPokemonName == null || selectedPokemonName.isEmpty()) {
+         nameError = "Name can not be empty";
+      }
+      // Check if the name is already used
+      else if(pokemonsManager.exists(selectedPokemonName)) {
+         nameError = "Name exists already";
+      }
+      
+      
+      // POKEMON TYPES VALIDATION
+      ArrayList<Type> types = new ArrayList<>();
+      String typesError = new String();
+      for(String t : selectedTypes) {
+         Type type = typesManager.findByName(t);
+         if(type != null) {
+            types.add(type);
+         }
+      }
+      
+      if(types.size() <= 0 || types.size() > Pokemon.MAX_TYPES) {
+         typesError = "Must fill in one type at least and max " +  + Pokemon.MAX_TYPES;
+      }
+      
+      
+      // POKEMON MOVES VALIDATION
+     ArrayList<Move> moves = new ArrayList<>();
+      String movesError = new String();
+      for(String m : selectedMoves) {
+         try {
+            Move move = movesManager.findById(Integer.parseInt(m));
+            if(move != null) {
+               moves.add(move);
+            }
+         }
+         catch(NumberFormatException e) {}
+      }
+      
+      if(moves.size() <= 0 || moves.size() > Pokemon.MAX_MOVES) {
+         movesError = "Must fill in one move at least and max " + Pokemon.MAX_MOVES;
+      }
+      
+      if(nameError.isEmpty() && 
+         typesError.isEmpty() && 
+         movesError.isEmpty()) 
+      {
+         pokemonsManager.update(
+            new Pokemon(
+                    pokemon.getNo(),
+                    selectedPokemonName, 
+                    moves,
+                    types
+            )
+         );
+         
+         // Redirection
+         // TODO : Redirect with a message
+         response.sendRedirect(request.getContextPath() + "/pokemons");
+         return;
+      }
+      
+      response.setContentType("text/html;charset=UTF-8");
+      System.out.println(pokemon.getNo());
+      request.setAttribute("pokemonNo", pokemon.getNo());
+      request.setAttribute("pokemonName", selectedPokemonName);
+      request.setAttribute("types", typesManager.findAll());
+      request.setAttribute("moves", movesManager.findAll());
+      request.setAttribute("typesValues", selectedTypes);
+      request.setAttribute("movesValues", selectedMoves);
+      
+      // Set errors
+      request.setAttribute("nameError", nameError);
+      request.setAttribute("typesError", typesError);
+      request.setAttribute("movesError", movesError);
+      
 
       request.getRequestDispatcher("WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }

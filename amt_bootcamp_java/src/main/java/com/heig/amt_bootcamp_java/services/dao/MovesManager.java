@@ -122,4 +122,21 @@ public class MovesManager implements MovesManagerLocal {
 
       return move;
    }
+   
+   @Override
+   public void deleteByNo(int no) {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL deleteTypesOfPokemon(?)");
+         preparedStatement.setInt(1, no);
+         preparedStatement.executeQuery();
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
 }

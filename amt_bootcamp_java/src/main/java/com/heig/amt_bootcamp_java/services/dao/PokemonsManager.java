@@ -253,6 +253,63 @@ public class PokemonsManager implements PokemonsManagerLocal {
       }
    }
    
+   @Override
+   public void update(Pokemon pokemon) {
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         connection.setAutoCommit(false);
+         
+         {
+            PreparedStatement preparedStatement = 
+               connection.prepareStatement("CALL updatePokemon(?, ?)");
+            preparedStatement.setInt(1, pokemon.getNo());
+            preparedStatement.setString(2, pokemon.getName());
+            preparedStatement.executeUpdate();
+         }
+         
+         {
+            PreparedStatement preparedStatement = 
+               connection.prepareStatement("CALL deleteTypesOfPokemon(?)");
+            preparedStatement.setInt(1, pokemon.getNo());
+            preparedStatement.executeUpdate();
+         }
+         
+         {
+            PreparedStatement preparedStatement = 
+               connection.prepareStatement("CALL deleteMovesOfPokemon(?)");
+            preparedStatement.setInt(1, pokemon.getNo());
+            preparedStatement.executeUpdate();
+         }
+         
+         // For each move
+         for(Move m : pokemon.getMoves()) {
+            PreparedStatement p = 
+               connection.prepareStatement("CALL addMoveToPokemon(?, ?)");
+            p.setInt(1, pokemon.getNo());
+            p.setInt(2, m.getId());
+            p.executeQuery();
+         }
+
+         // For each type
+         for(Type t : pokemon.getTypes()) {
+            PreparedStatement p = 
+               connection.prepareStatement("CALL addTypeToPokemon(?, ?)");
+            p.setInt(1, pokemon.getNo());
+            p.setString(2, t.getName());
+            p.executeQuery();
+         }
+         
+         connection.commit();
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+   }
+   
    /**
     * Get a pokemon (Method for refactor)
     * 
