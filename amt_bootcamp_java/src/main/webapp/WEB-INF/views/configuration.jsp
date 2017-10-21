@@ -25,9 +25,9 @@
          </section>
 
          <section class="row text-center justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">
-            <article class="padding-sm col-10 col-sm-10 col-md-10 col-lg-8">
+            <article class="col-10 col-sm-10 col-md-10 col-lg-8">
 
-               <h1>Generate pokemons</h1>
+               <h1 class="margin-sm">Generate pokemons</h1>
                <c:if test="${errorMessage != null}">
                   <div class="alert alert-danger" role="alert">
                      ${errorMessage}

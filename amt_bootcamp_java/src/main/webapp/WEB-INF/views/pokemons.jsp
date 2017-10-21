@@ -27,7 +27,7 @@
             </div>
          </section>
          <section class="row text-center justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">
-            <article class="pokemon-list padding-sm col-10 col-sm-10 col-md-10 col-lg-10">
+            <article class="pokemon-list col-10 col-sm-10 col-md-10 col-lg-10">
                <h1 class="margin-sm">Pokedex</h1>
                
                <%@include file="./parts/pagination.jsp"%>
