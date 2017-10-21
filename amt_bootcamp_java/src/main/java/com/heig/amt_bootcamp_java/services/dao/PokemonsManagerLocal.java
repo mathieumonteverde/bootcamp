@@ -78,4 +78,10 @@ public interface PokemonsManagerLocal {
     * @param no The no that identifies the pokemon
     */
    public void deleteByNo(int no);
+   
+   /**
+    * Update a pokemon
+    * @param p Pokemon to update
+    */
+   public void update(Pokemon p);
 }

@@ -164,3 +164,30 @@ BEGIN
   END WHILE;
 END //
 
+
+-- Pokemon update
+DELIMITER //
+CREATE PROCEDURE updatePokemon (IN pokemonNo INT, IN n varchar(80))
+BEGIN
+  UPDATE Pokemon SET Name = n
+  WHERE No = pokemonNo;
+END //
+
+
+-- Types delete by pokemon no
+DELIMITER //
+CREATE PROCEDURE deleteTypesOfPokemon (IN no INT)
+BEGIN
+  DELETE FROM Pokemon_Type
+  WHERE PokemonNo = no;
+END //
+
+
+-- Moves delete by pokemon no
+DELIMITER //
+CREATE PROCEDURE deleteMovesOfPokemon (IN no INT)
+BEGIN
+  DELETE FROM Pokemon_Move
+  WHERE PokemonNo = no;
+END //
+

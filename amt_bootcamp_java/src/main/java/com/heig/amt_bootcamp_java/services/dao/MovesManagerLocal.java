@@ -40,4 +40,10 @@ public interface MovesManagerLocal {
     * @return Returns the found type. Returns null if not found.
     */
    public Move findById(int id);
+   
+   /**
+    * Delete types by pokemon no
+    * @param no to search and delete
+    */
+   public void deleteByNo(int no);
 }
