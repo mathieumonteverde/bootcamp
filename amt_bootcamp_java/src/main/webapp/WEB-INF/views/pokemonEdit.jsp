@@ -40,13 +40,16 @@
                      <input type="text" class="form-control" id="pokemonNo" value="${pokemon.no}" name="pokemonNo" placeholder="Pokemon no..." />
                   </div>
                   
+                  <c:if test="${nameError != null}">${nameError}</c:if>
                   <div class="form-group row">
                      <input type="text" class="form-control" id="pokemonName" value="${pokemon.name}" name="pokemonName" placeholder="Pokemon name..." />
                   </div>
                   
                   <%@include file="./parts/typeSelect.jsp"%>
+                  <c:if test="${typesError != null}">${typesError}</c:if>
 
                   <%@include file="./parts/moveSelect.jsp"%>
+                  <c:if test="${movesError != null}">${movesError}</c:if>
 
                   <div class="row">
                      <input class="btn btn-primary col-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Edit pokemon...">

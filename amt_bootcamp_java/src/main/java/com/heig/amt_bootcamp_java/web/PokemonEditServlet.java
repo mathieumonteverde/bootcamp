@@ -147,14 +147,17 @@ public class PokemonEditServlet extends HttpServlet {
       
       // POKEMON NAME VALIDATION
       String nameError = new String();
-      
+
       // Check for empty name
       if(selectedPokemonName == null || selectedPokemonName.isEmpty()) {
          nameError = "Name can not be empty";
       }
       // Check if the name is already used
-      else if(pokemonsManager.exists(selectedPokemonName)) {
+      else if(!pokemon.getName().equals(selectedPokemonName) && pokemonsManager.exists(selectedPokemonName)) {
          nameError = "Name exists already";
+      }
+      else {
+         pokemon.setName(selectedPokemonName);
       }
       
       
@@ -170,6 +173,9 @@ public class PokemonEditServlet extends HttpServlet {
       
       if(types.size() <= 0 || types.size() > Pokemon.MAX_TYPES) {
          typesError = "Must fill in one type at least and max " +  + Pokemon.MAX_TYPES;
+      }
+      else {
+         pokemon.setTypes(types);
       }
       
       
@@ -189,18 +195,16 @@ public class PokemonEditServlet extends HttpServlet {
       if(moves.size() <= 0 || moves.size() > Pokemon.MAX_MOVES) {
          movesError = "Must fill in one move at least and max " + Pokemon.MAX_MOVES;
       }
+      else {
+         pokemon.setMoves(moves);
+      }
       
       if(nameError.isEmpty() && 
          typesError.isEmpty() && 
          movesError.isEmpty()) 
       {
          pokemonsManager.update(
-            new Pokemon(
-                    pokemon.getNo(),
-                    selectedPokemonName, 
-                    moves,
-                    types
-            )
+            pokemon
          );
          
          // Redirection
@@ -210,7 +214,7 @@ public class PokemonEditServlet extends HttpServlet {
       }
       
       response.setContentType("text/html;charset=UTF-8");
-      System.out.println(pokemon.getNo());
+
       request.setAttribute("pokemon", pokemon);
       request.setAttribute("types", typesManager.findAll());
       request.setAttribute("moves", movesManager.findAll());
