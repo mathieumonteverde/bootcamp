@@ -25,8 +25,8 @@
          </section>
 
          <!-- Edit pokemon form section -->
-         <section class="row text-center justify-content-md-center">
-            <article class="padding-sm col-md-12 col-lg-8">
+         <section class="row text-center justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">
+            <article class="padding-sm col-10 col-sm-10col-md-10 col-lg-8">
 
                <h1>Add a pokemon</h1>
 
@@ -50,7 +50,7 @@
                   <c:if test="${movesError != null}">${movesError}</c:if>
 
                   <div class="row">
-                     <input class="btn btn-primary col-xs-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Add pokemon...">
+                     <input class="btn btn-primary col-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Add pokemon...">
                   </div>
                </form>
             </article>

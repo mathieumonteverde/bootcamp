@@ -4,7 +4,7 @@
 */
 
 /* Transitions */
-a.nav-link {
+a.nav-link, header .add-pokemon-button svg path {
     -webkit-transition: all 0.5s; /* Safari */
     transition: all 0.5s;
 }

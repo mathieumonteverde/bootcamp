@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PokemonServlet extends HttpServlet {
 
-   public static final int POKEMONS_PER_PAGE = 5;
+   public static final int POKEMONS_PER_PAGE =10;
 
    @EJB
    private PokemonsManagerLocal pokemonsManager;

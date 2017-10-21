@@ -24,8 +24,8 @@
             </div>
          </section>
          <section class="row text-center">
-            <div class="col-xs-01 col-sm-1 col-md-1 col-lg-2"></div>
-            <article class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
+            <div class="col-1 col-1 col-sm-1 col-md-1 col-lg-2"></div>
+            <article class="col-10 col-sm-10 col-md-10 col-lg-8 text-center">
                <h1 class="text-center margin-sm">Confirm Pokemon deletion</h1>
                <form id="confirmDelete" action="${pageContext.request.contextPath}/pokemons/delete" method="POST">
                   <p>You are about to delete the Pokemon n°${pokemon.no} <b>${pokemon.name}</b>. This action cannot be reverted.</p>
