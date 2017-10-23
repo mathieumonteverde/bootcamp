@@ -5,18 +5,25 @@ import com.heig.amt_bootcamp_java.model.Pokemon;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * This defines all actions possible in database for pokemons
+ *
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
+ */
 @Local
 public interface PokemonsManagerLocal {
    
    /**
     * Add new pokemons
     * @param pokemon The pokemon to add
+    * @throws com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation
     */
    public void add(Pokemon pokemon) throws IntegrityConstraintViolation ;
    
    /**
     * Add new pokemons
     * @param pokemons The pokemons to add
+    * @throws com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation
     */
    public void add(List<Pokemon> pokemons) throws IntegrityConstraintViolation ;
    
@@ -42,6 +49,8 @@ public interface PokemonsManagerLocal {
    
    /**
     * Returns a list of all pokemons
+    * @param limit The limit
+    * @param offset The offset
     * @return a list of all pokemons
     */
    public List<Pokemon> findAll(int limit, int offset);
@@ -83,6 +92,7 @@ public interface PokemonsManagerLocal {
    /**
     * Update a pokemon
     * @param p Pokemon to update
+    * @throws com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation
     */
    public void update(Pokemon p) throws IntegrityConstraintViolation;
 }

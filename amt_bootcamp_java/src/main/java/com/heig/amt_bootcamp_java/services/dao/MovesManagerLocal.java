@@ -4,6 +4,11 @@ import com.heig.amt_bootcamp_java.model.Move;
 import java.util.List;
 import javax.ejb.Local;
 
+/**
+ * This defines all actions possible in database for moves
+ *
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
+ */
 @Local
 public interface MovesManagerLocal {
    
