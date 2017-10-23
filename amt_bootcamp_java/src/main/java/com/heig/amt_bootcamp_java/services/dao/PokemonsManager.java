@@ -75,10 +75,6 @@ public class PokemonsManager implements PokemonsManagerLocal {
 
       } 
       catch (SQLException ex) {
-         
-         System.out.println(ex.getSQLState());
-         System.out.println(ex.getErrorCode());
-         
          if(ex.getSQLState().equals("23000")) {
             throw new IntegrityConstraintViolation(ex.getMessage());
          }
