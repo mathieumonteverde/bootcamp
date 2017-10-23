@@ -1,12 +1,10 @@
 package com.heig.amt_bootcamp_java.model;
 
 /**
- * @author Mathieu Monteverde, Sathiya Kirushnapillai
- * @file Pokemon.java
- * @date 13.10.2017
- * 
  * The Move class is the model to store Move information. It provides the 
  * Move.
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
  */
 public class Move {
    

@@ -88,7 +88,7 @@ public class MovesManager implements MovesManagerLocal {
          
       } catch (SQLException ex) {
          Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            MovesManager.class.getName()).log(Level.SEVERE, null, ex
          );
       }
 
@@ -116,7 +116,7 @@ public class MovesManager implements MovesManagerLocal {
          
       } catch (SQLException ex) {
          Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            MovesManager.class.getName()).log(Level.SEVERE, null, ex
          );
       }
 
@@ -135,7 +135,7 @@ public class MovesManager implements MovesManagerLocal {
          preparedStatement.executeQuery();
       } catch (SQLException ex) {
          Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            MovesManager.class.getName()).log(Level.SEVERE, null, ex
          );
       }
    }

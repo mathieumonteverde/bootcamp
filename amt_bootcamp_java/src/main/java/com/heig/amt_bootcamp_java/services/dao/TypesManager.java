@@ -82,7 +82,7 @@ public class TypesManager implements TypesManagerLocal {
          
       } catch (SQLException ex) {
          Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            TypesManager.class.getName()).log(Level.SEVERE, null, ex
          );
       }
 
@@ -101,7 +101,7 @@ public class TypesManager implements TypesManagerLocal {
          preparedStatement.executeQuery();
       } catch (SQLException ex) {
          Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            TypesManager.class.getName()).log(Level.SEVERE, null, ex
          );
       }
    }

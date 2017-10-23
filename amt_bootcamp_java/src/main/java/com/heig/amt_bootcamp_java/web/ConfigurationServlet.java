@@ -1,34 +1,23 @@
 package com.heig.amt_bootcamp_java.web;
 
-import com.heig.amt_bootcamp_java.model.Move;
 import com.heig.amt_bootcamp_java.model.Pokemon;
-import com.heig.amt_bootcamp_java.model.Type;
-import com.heig.amt_bootcamp_java.services.dao.MovesManagerLocal;
 import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
-import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.ThreadLocalRandom;
-import javax.servlet.RequestDispatcher;
 
-
+/**
+ * This servlet serves the configuration page
+ *
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
+ */
 public class ConfigurationServlet extends HttpServlet {
    
    @EJB
    private PokemonsManagerLocal pokemonsManager;
-   
-   @EJB
-   private MovesManagerLocal movesManager;
-   
-   @EJB
-   private TypesManagerLocal typesManager;
 
    /**
     * Handles the HTTP <code>GET</code> method.
@@ -86,17 +75,6 @@ public class ConfigurationServlet extends HttpServlet {
       pokemonsManager.generatePokemons(nbGene, Pokemon.MAX_TYPES, Pokemon.MAX_MOVES);
       
       // Redirection
-      // TODO : Redirect with a message
       response.sendRedirect(request.getContextPath() + "/pokemons");
-   }
-
-   /**
-    * Returns a short description of the servlet.
-    *
-    * @return a String containing servlet description
-    */
-   @Override
-   public String getServletInfo() {
-      return "Short description";
    }
 }
