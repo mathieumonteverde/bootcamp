@@ -43,7 +43,7 @@
                   </div>
                   
                   <div class="form-group row">
-                     <input type="text" class="form-control" id="pokemonNo" value="${pokemon.no}" name="pokemonNo" placeholder="Pokemon no..." />
+                     <input type="hidden" class="form-control" id="pokemonNo" value="${pokemon.no}" name="pokemonNo" placeholder="Pokemon no..." />
                   </div>
                   
                   <c:if test="${nameError != null}">${nameError}</c:if>
