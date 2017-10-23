@@ -35,3 +35,40 @@ mvn clean install -PtoDocker
 It will build the *.war* file inside the docker image folder, making it available for the next time you run the project.
 
 *Note: a .war java file is already provided. You should not need to use this command if you didn't change the Java source code.*
+
+## Implemented features and criteria ##
+
+### Mandatory ###
+
+-[x] There is a clean repo containing the code and a README.md file that describes how to use the app (indicate the access URL)...
+
+Yes, yes there is.
+
+
+- [x] There is a clean repo containing the code and a README.md file that describes how to use the app (indicate the access URL)
+
+Please refer to the section above about how to run the project.
+
+
+- [x] We can generate a (large) list of random things.
+- [x] We can add a new Thing. There is a form for that.
+- [x] We can delete a Thing.
+- [x] We can update a Thing.
+- [x] We have pagination controls to browse through the list.
+- [x] The Things are stored in a database (running in a Docker container)
+- [x] The MVC pattern is used to manage navigation between pages.
+- [x] We are not able to make the application crash.
+
+### Extra ###
+
+- [x] A nice web template (e.g. based on Bootstrap) has been integrated.
+
+Home made, with love. And did we mention it's also responsive ? 
+
+- [x] The content of the form is validated on the server side. Error messages are displayed to the user.
+
+We didn't want no fake Pokemon in our Pokedex.
+
+- [x] When the user deletes a thing, he is asked for confirmation. He can tick a “Don’t ask me again” checkbox.
+
+We used cookies to keep our user as happy as possible.
