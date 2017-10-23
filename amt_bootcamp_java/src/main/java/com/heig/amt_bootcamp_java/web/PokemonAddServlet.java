@@ -167,7 +167,7 @@ public class PokemonAddServlet extends HttpServlet {
       
       List<String> selectedMoves = new ArrayList<>();
       for(Move move : p.getMoves()) {
-         selectedMoves.add(move.getName());
+         selectedMoves.add("" + move.getId());
       }
       for(int i = p.getMoves().size(); i < Pokemon.MAX_MOVES; i++) {
          selectedMoves.add("Move " + i);
