@@ -1,7 +1,9 @@
 package com.heig.amt_bootcamp_java.model;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -58,9 +60,19 @@ public class Pokemon {
 
    public void setMoves(List<Move> moves) {
       this.moves = moves;
+      
+      removeDouble(this.moves);
    }
 
    public void setTypes(List<Type> types) {
       this.types = types;
+      
+      removeDouble(this.types);
+   }
+   
+   public <T> void removeDouble(List<T> list) {
+      Set setItems = new LinkedHashSet(list);
+      list.clear();
+      list.addAll(setItems);
    }
 }
