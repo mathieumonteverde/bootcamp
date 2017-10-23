@@ -1,9 +1,7 @@
 <%-- 
     Document   : deleteConfirmation
-    Created on : 20 oct. 2017, 19:20:40
-    Author     : Mathieu Monteverde & Sathiya kirushnapillai
+    Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>

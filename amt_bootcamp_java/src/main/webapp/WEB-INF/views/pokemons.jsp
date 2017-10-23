@@ -1,6 +1,5 @@
 <%-- 
     Document   : pokemons
-    Created on : 29 sept. 2017, 14:55:36
     Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 --%>
 
