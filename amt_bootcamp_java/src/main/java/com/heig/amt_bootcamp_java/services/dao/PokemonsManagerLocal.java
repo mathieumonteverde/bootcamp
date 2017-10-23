@@ -1,5 +1,6 @@
 package com.heig.amt_bootcamp_java.services.dao;
 
+import com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation;
 import com.heig.amt_bootcamp_java.model.Pokemon;
 import java.util.List;
 import javax.ejb.Local;
@@ -11,13 +12,13 @@ public interface PokemonsManagerLocal {
     * Add new pokemons
     * @param pokemon The pokemon to add
     */
-   public void add(Pokemon pokemon);
+   public void add(Pokemon pokemon) throws IntegrityConstraintViolation ;
    
    /**
     * Add new pokemons
     * @param pokemons The pokemons to add
     */
-   public void add(List<Pokemon> pokemons);
+   public void add(List<Pokemon> pokemons) throws IntegrityConstraintViolation ;
    
    /**
     * Count the number of pokemons

@@ -22,7 +22,7 @@ CREATE TABLE Move (
 -- POKEMON
 CREATE TABLE Pokemon (
   No    int              NOT NULL,
-  Name  varchar(80)     NOT NULL,
+  Name  varchar(80)      NOT NULL UNIQUE,
   
   PRIMARY KEY(No)
 );

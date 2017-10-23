@@ -1,6 +1,10 @@
 package com.heig.amt_bootcamp_java.model;
 
 import java.util.List;
+import javax.ejb.Stateless;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * @author Mathieu Monteverde, Sathiya Kirushnapillai
@@ -10,22 +14,26 @@ import java.util.List;
  * The Pokemon class is the model to store Pokemon information. It provides the 
  * Pokemon.Type enum to describe a Pokemon type(s).
  */
+@Stateless
 public class Pokemon {
    
    public static final int MAX_TYPES = 3;
    public static final int MAX_MOVES = 4;
    
+   //You must enter a positive number
+   @DecimalMin("0")
+   @NotNull(message = "No cannot be null")
    private int no;
+   
+   @NotNull(message = "Name cannot be null")
+   @Size(min = 3, max = 80, message = "Name must be between 3 and 80 characters")
    private String name;
+   
+   @Size(min=1, max=Pokemon.MAX_MOVES, message="Must fill in one move at least and max " + Pokemon.MAX_MOVES)
    private List<Move> moves;
+   
+   @Size(min=1, max=Pokemon.MAX_TYPES, message="Must fill in one type at least and max " + Pokemon.MAX_TYPES)
    private List<Type> types;
-
-   public Pokemon(int no, String name, List<Move> moves, List<Type> types) {
-      this.no = no;
-      this.name = name;
-      this.moves = moves;
-      this.types = types;
-   }
    
    public int getNo() {
       return no;

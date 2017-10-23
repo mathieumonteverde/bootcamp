@@ -29,6 +29,12 @@
             <article class="col-10 col-sm-10col-md-10 col-lg-8">
 
                <h1 class="margin-sm">Add a pokemon</h1>
+               
+               <c:if test="${constraintError != null}">
+                  <div class="alert alert-danger" role="alert">
+                    The value ${constraintError} already exist.
+                  </div>
+               </c:if>
 
                <!-- Form to Add the Pokemon -->
                <form class="text-left" action="${pageContext.request.contextPath}/pokemons/add" method="POST">

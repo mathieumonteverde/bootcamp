@@ -1,5 +1,6 @@
 package com.heig.amt_bootcamp_java.services.dao;
 
+import com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation;
 import com.heig.amt_bootcamp_java.model.Move;
 import com.heig.amt_bootcamp_java.model.Pokemon;
 import com.heig.amt_bootcamp_java.model.Type;
@@ -29,12 +30,12 @@ public class PokemonsManager implements PokemonsManagerLocal {
    
    
    @Override
-   public void add(Pokemon pokemon) {
+   public void add(Pokemon pokemon) throws IntegrityConstraintViolation {
       add(Arrays.asList(pokemon));
    }
    
    @Override
-   public void add(List<Pokemon> pokemons) {
+   public void add(List<Pokemon> pokemons) throws IntegrityConstraintViolation {
 
       try (
          Connection connection = dataSource.getConnection()
@@ -71,12 +72,21 @@ public class PokemonsManager implements PokemonsManagerLocal {
             
             connection.commit();
          }
+
+      } 
+      catch (SQLException ex) {
          
+         System.out.println(ex.getSQLState());
+         System.out.println(ex.getErrorCode());
          
-      } catch (SQLException ex) {
-         Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
-         );
+         if(ex.getSQLState().equals("23000")) {
+            throw new IntegrityConstraintViolation(ex.getMessage());
+         }
+         else {
+            Logger.getLogger(
+               PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            );
+         }
       }
    }
    
@@ -353,6 +363,12 @@ public class PokemonsManager implements PokemonsManagerLocal {
       
       String name = pokemon.getString("Name");
       
-      return new Pokemon(no, name, moves, types);
+      Pokemon p = new Pokemon();
+      p.setNo(no);
+      p.setName(name);
+      p.setMoves(moves);
+      p.setTypes(types);
+      
+      return p;
    }
 }
