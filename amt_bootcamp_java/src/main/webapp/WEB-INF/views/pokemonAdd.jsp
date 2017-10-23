@@ -38,22 +38,36 @@
 
                <!-- Form to Add the Pokemon -->
                <form class="text-left" action="${pageContext.request.contextPath}/pokemons/add" method="POST">
-                  <c:if test="${noError != null}">${noError}</c:if>
+                 
                   <div class="form-group row">
                      <input type="text" class="form-control" id="pokemonNo" value="${pokemonNo}" name="pokemonNo" placeholder="Pokemon no..." />
+                      <c:if test="${noError != null}">
+                         <span class="text-error">${noError}</span>
+                      </c:if>
                   </div>
                   
-                  <c:if test="${nameError != null}">${nameError}</c:if>
                   <div class="form-group row">
                      <input type="text" class="form-control" id="pokemonName" value="${pokemonName}" name="pokemonName" placeholder="Pokemon name..." />
+                     <c:if test="${nameError != null}">
+                        <span class="text-error">${nameError}</span>
+                     </c:if>
                   </div>
                   
+                     
                   <%@include file="./parts/typeSelect.jsp"%>
-                  <c:if test="${typesError != null}">${typesError}</c:if>
+                  <div class="row">
+                     <c:if test="${typesError != null}">
+                        <span class="text-error">${typesError}</span>
+                     </c:if>
+                  </div>
                   
 
                   <%@include file="./parts/moveSelect.jsp"%>
-                  <c:if test="${movesError != null}">${movesError}</c:if>
+                  <div class="row">
+                     <c:if test="${movesError != null}">
+                        <span class="text-error">${movesError}</span>
+                     </c:if>
+                  </div>
 
                   <div class="row">
                      <input class="btn btn-primary col-12 col-sm-6 col-md-6 col-lg-4" type="submit" value="Add pokemon...">
