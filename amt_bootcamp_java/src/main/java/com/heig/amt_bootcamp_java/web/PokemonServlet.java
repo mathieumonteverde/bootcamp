@@ -37,6 +37,11 @@ public class PokemonServlet extends HttpServlet {
       int page;
       int pokemonsPerPage;
       
+      String search = request.getParameter("search");
+      if(search != null && search.isEmpty()) {
+         search = null;
+      }
+      
       // Check if the page is a number
       try {
          page = Integer.parseInt(request.getParameter("page"));
@@ -70,7 +75,13 @@ public class PokemonServlet extends HttpServlet {
       }
 
       response.setContentType("text/html;charset=UTF-8");
-      request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsPerPage, (page - 1) * pokemonsPerPage));
+      
+      if(search == null) {
+         request.setAttribute("pokemons", pokemonsManager.findAll(pokemonsPerPage, (page - 1) * pokemonsPerPage));
+      }
+      else {
+         request.setAttribute("pokemons", pokemonsManager.search(search, pokemonsPerPage, (page - 1) * pokemonsPerPage));
+      }
 
       // Pagination variables
       request.setAttribute("page", page);
