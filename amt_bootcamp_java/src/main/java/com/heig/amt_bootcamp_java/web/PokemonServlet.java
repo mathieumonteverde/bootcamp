@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.heig.amt_bootcamp_java.web;
 
 import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
@@ -16,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author mathieu
+ * This servlet serves the home page
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
  */
 public class PokemonServlet extends HttpServlet {
 
@@ -36,34 +32,39 @@ public class PokemonServlet extends HttpServlet {
     */
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
+      throws ServletException, IOException {
 
-      // Get page number
-      int page = 1;
-      int pokemonsPerPage = POKEMONS_PER_PAGE;
+      int page;
+      int pokemonsPerPage;
+      
+      // Check if the page is a number
       try {
          page = Integer.parseInt(request.getParameter("page"));
       } catch (NumberFormatException e) {
-         page = 1; // TODO: 404 or error ?
+         page = 1;
       }
 
+      // Check if the number of pokemon per page is a number
       try {
          pokemonsPerPage = Integer.parseInt(request.getParameter("pokemonsPerPage"));
       } catch (NumberFormatException e) {
-         pokemonsPerPage = POKEMONS_PER_PAGE; // TODO: 404 or error ?
+         pokemonsPerPage = POKEMONS_PER_PAGE;
       }
       
+      // Check for negative value
       if (pokemonsPerPage < 1) {
          response.sendError(HttpServletResponse.SC_NOT_FOUND);
       }
+      
+      // Calcul the number of page
+      int totalNbPokemon = pokemonsManager.count();
+      int maxNbPage = (int) Math.ceil(totalNbPokemon / (double) pokemonsPerPage);
 
-      int maxNbPokemon = pokemonsManager.count();
-      int maxNbPage = (int) Math.ceil(maxNbPokemon / (double) pokemonsPerPage);
-
-      // Page limitation
+      // Check page limitation
       if (page < 1) {
          response.sendError(HttpServletResponse.SC_NOT_FOUND);
       }
+      
       if (page > maxNbPage) {
          page = maxNbPage;
       }
@@ -111,19 +112,4 @@ public class PokemonServlet extends HttpServlet {
 
       request.getRequestDispatcher("/WEB-INF/views/pokemons.jsp").forward(request, response);
    }
-
-   /**
-    * Handles the HTTP <code>POST</code> method.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
-   @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
-      // Do Something on POST
-   }
-
 }
