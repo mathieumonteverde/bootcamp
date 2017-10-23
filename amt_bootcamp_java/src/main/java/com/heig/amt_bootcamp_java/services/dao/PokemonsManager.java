@@ -260,7 +260,7 @@ public class PokemonsManager implements PokemonsManagerLocal {
    }
    
    @Override
-   public void update(Pokemon pokemon) {
+   public void update(Pokemon pokemon) throws IntegrityConstraintViolation {
       try (
          Connection connection = dataSource.getConnection()
       ) 
@@ -310,9 +310,15 @@ public class PokemonsManager implements PokemonsManagerLocal {
          connection.commit();
          
       } catch (SQLException ex) {
-         Logger.getLogger(
-            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
-         );
+         
+         if(ex.getSQLState().equals("23000")) {
+            throw new IntegrityConstraintViolation(ex.getMessage());
+         }
+         else {
+            Logger.getLogger(
+               PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+            );
+         }
       }
    }
    

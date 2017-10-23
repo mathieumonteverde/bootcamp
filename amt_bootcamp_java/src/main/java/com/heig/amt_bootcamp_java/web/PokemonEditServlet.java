@@ -5,6 +5,7 @@
  */
 package com.heig.amt_bootcamp_java.web;
 
+import com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation;
 import com.heig.amt_bootcamp_java.model.Move;
 import com.heig.amt_bootcamp_java.model.Pokemon;
 import com.heig.amt_bootcamp_java.model.Type;
@@ -14,11 +15,16 @@ import com.heig.amt_bootcamp_java.services.dao.TypesManagerLocal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -109,18 +115,6 @@ public class PokemonEditServlet extends HttpServlet {
       
       // Get the POST submitted data
       String selectedPokemonNo = request.getParameter("pokemonNo");
-      String selectedPokemonName = request.getParameter("pokemonName");
-      
-      List<String> selectedTypes = new ArrayList<>();
-      for(int i = 1; i <= Pokemon.MAX_TYPES; i++) {
-         selectedTypes.add(request.getParameter("pokemonType" + i));
-      }
-
-      List<String> selectedMoves = new ArrayList<>();
-      for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
-         selectedMoves.add(request.getParameter("pokemonMove" + i));
-      }
-      
       
       // POKEMON NO VALIDATION
       Pokemon pokemon = null;
@@ -144,46 +138,27 @@ public class PokemonEditServlet extends HttpServlet {
          return;
       }
 
-      
-      // POKEMON NAME VALIDATION
-      String nameError = new String();
-
-      // Check for empty name
-      if(selectedPokemonName == null || selectedPokemonName.isEmpty()) {
-         nameError = "Name can not be empty";
-      }
-      // Check if the name is already used
-      else if(!pokemon.getName().equals(selectedPokemonName) && pokemonsManager.exists(selectedPokemonName)) {
-         nameError = "Name exists already";
-      }
-      else {
-         pokemon.setName(selectedPokemonName);
-      }
+      // Set Name
+      pokemon.setName(request.getParameter("pokemonName"));
       
       
-      // POKEMON TYPES VALIDATION
+            // Set types
       ArrayList<Type> types = new ArrayList<>();
-      String typesError = new String();
-      for(String t : selectedTypes) {
+      for(int i = 1; i <= Pokemon.MAX_TYPES; i++) {
+         String t = request.getParameter("pokemonType" + i);
          Type type = typesManager.findByName(t);
          if(type != null) {
             types.add(type);
          }
       }
+      pokemon.setTypes(types);
+  
+      // Set moves
+      ArrayList<Move> moves = new ArrayList<>();
       
-      if(types.size() <= 0 || types.size() > Pokemon.MAX_TYPES) {
-         typesError = "Must fill in one type at least and max " +  + Pokemon.MAX_TYPES;
-      }
-      else {
-         pokemon.setTypes(types);
-      }
-      
-      
-      // POKEMON MOVES VALIDATION
-     ArrayList<Move> moves = new ArrayList<>();
-      String movesError = new String();
-      for(String m : selectedMoves) {
+      for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
          try {
+            String m = request.getParameter("pokemonMove" + i);
             Move move = movesManager.findById(Integer.parseInt(m));
             if(move != null) {
                moves.add(move);
@@ -191,26 +166,29 @@ public class PokemonEditServlet extends HttpServlet {
          }
          catch(NumberFormatException e) {}
       }
+      pokemon.setMoves(moves);
       
-      if(moves.size() <= 0 || moves.size() > Pokemon.MAX_MOVES) {
-         movesError = "Must fill in one move at least and max " + Pokemon.MAX_MOVES;
-      }
-      else {
-         pokemon.setMoves(moves);
-      }
       
-      if(nameError.isEmpty() && 
-         typesError.isEmpty() && 
-         movesError.isEmpty()) 
+
+      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+      Validator validator = factory.getValidator();
+      
+      Set<ConstraintViolation<Pokemon>> violations = validator.validate(pokemon);
+      
+      String constraintError = null;
+      if(violations.size() == 0) 
       {
-         pokemonsManager.update(
-            pokemon
-         );
-         
-         // Redirection
-         // TODO : Redirect with a message
-         response.sendRedirect(request.getContextPath() + "/pokemons");
-         return;
+         try {
+            pokemonsManager.update(pokemon);
+
+            // Redirection
+            // TODO : Redirect with a message
+            response.sendRedirect(request.getContextPath() + "/pokemons");
+            return;
+         }
+         catch (IntegrityConstraintViolation e) {
+            constraintError = e.getValue();
+         }
       }
       
       response.setContentType("text/html;charset=UTF-8");
@@ -218,13 +196,35 @@ public class PokemonEditServlet extends HttpServlet {
       request.setAttribute("pokemon", pokemon);
       request.setAttribute("types", typesManager.findAll());
       request.setAttribute("moves", movesManager.findAll());
+      
+      List<String> selectedTypes = new ArrayList<>();
+      for(Type type : pokemon.getTypes()) {
+         selectedTypes.add(type.getName());
+      }
+      for(int i = pokemon.getTypes().size(); i < Pokemon.MAX_TYPES; i++) {
+         selectedTypes.add("Type " + i);
+      }
       request.setAttribute("typesValues", selectedTypes);
+      
+      List<String> selectedMoves = new ArrayList<>();
+      for(Move move : pokemon.getMoves()) {
+         selectedMoves.add("" + move.getId());
+      }
+      for(int i = pokemon.getMoves().size(); i < Pokemon.MAX_MOVES; i++) {
+         selectedMoves.add("Move " + i);
+      }
       request.setAttribute("movesValues", selectedMoves);
       
       // Set errors
-      request.setAttribute("nameError", nameError);
-      request.setAttribute("typesError", typesError);
-      request.setAttribute("movesError", movesError);
+      for (ConstraintViolation<Pokemon> violation : violations) {
+         request.setAttribute(
+            violation.getPropertyPath() + "Error" , 
+            violation.getMessage()
+         );
+      }
+      
+      request.setAttribute("constraintError", constraintError);
+
       
 
       request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);

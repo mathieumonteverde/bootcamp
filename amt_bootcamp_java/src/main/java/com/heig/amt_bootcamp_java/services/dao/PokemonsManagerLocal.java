@@ -84,5 +84,5 @@ public interface PokemonsManagerLocal {
     * Update a pokemon
     * @param p Pokemon to update
     */
-   public void update(Pokemon p);
+   public void update(Pokemon p) throws IntegrityConstraintViolation;
 }
