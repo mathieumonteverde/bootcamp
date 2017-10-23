@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.heig.amt_bootcamp_java.web;
 
 import com.heig.amt_bootcamp_java.services.dao.PokemonsManagerLocal;
@@ -15,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author mathieu
+ * This servlet serves the delete page
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
  */
 public class PokemonDeleteServlet extends HttpServlet {
    
@@ -103,9 +99,11 @@ public class PokemonDeleteServlet extends HttpServlet {
                // Set a cookie
                response.addCookie(new Cookie(COOKIE_DELETE, "true"));
             }
-            
+
             // Redirect to pokemons
-            response.sendRedirect(request.getContextPath() + "/pokemons");
+            String message = "Pokemon was successfully deleted";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("/success.jsp").forward(request, response);
          } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
          }
@@ -114,15 +112,4 @@ public class PokemonDeleteServlet extends HttpServlet {
          response.sendError(HttpServletResponse.SC_NOT_FOUND);
       }
    }
-
-   /**
-    * Returns a short description of the servlet.
-    *
-    * @return a String containing servlet description
-    */
-   @Override
-   public String getServletInfo() {
-      return "Short description";
-   } 
-
 }
