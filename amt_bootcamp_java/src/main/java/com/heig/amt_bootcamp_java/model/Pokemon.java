@@ -1,5 +1,6 @@
 package com.heig.amt_bootcamp_java.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.validation.constraints.DecimalMin;
@@ -60,10 +61,27 @@ public class Pokemon {
    }
 
    public void setMoves(List<Move> moves) {
-      this.moves = moves;
+      this.moves = filterRepetition(moves);
    }
 
    public void setTypes(List<Type> types) {
-      this.types = types;
+      this.types = filterRepetition(types);
+   }
+   
+   private static <T> List<T> filterRepetition(List<T> types) {
+      ArrayList<T> list = new ArrayList<>();
+      
+      for (T t1 : types) {
+         boolean contains = false;
+         for (T t2 : list) {
+            contains = contains && t2.equals(t1);
+         }
+         
+         if (!contains) {
+            list.add(t1);
+         }
+      }
+      
+      return list;
    }
 }
