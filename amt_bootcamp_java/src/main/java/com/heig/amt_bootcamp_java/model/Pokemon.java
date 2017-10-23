@@ -6,12 +6,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * @author Mathieu Monteverde, Sathiya Kirushnapillai
- * @file Pokemon.java
- * @date 20.09.2017
- * 
  * The Pokemon class is the model to store Pokemon information. It provides the 
- * Pokemon.Type enum to describe a Pokemon type(s).
+ * Pokemon.
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
  */
 public class Pokemon {
    
