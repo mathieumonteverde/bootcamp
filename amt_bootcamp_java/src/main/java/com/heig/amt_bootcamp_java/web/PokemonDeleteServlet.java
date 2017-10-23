@@ -54,9 +54,11 @@ public class PokemonDeleteServlet extends HttpServlet {
                   pokemonsManager.deleteByNo(no);
 
                   // Redirect to pokemons
-                  response.sendRedirect(request.getContextPath() + "/pokemons");
-                  
+                  String message = "Pokemon was successfully deleted";
+                  request.setAttribute("message", message);
+                  request.getRequestDispatcher("/success.jsp").forward(request, response);
                   return;
+
                }
             }
             

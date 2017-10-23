@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -139,8 +140,9 @@ public class PokemonAddServlet extends HttpServlet {
             pokemonsManager.add(p);
             
             // Redirection
-            // TODO : Redirect with a message
-            response.sendRedirect(request.getContextPath() + "/pokemons");
+            String message = "Pokemon was successfully added";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("/success.jsp").forward(request, response);
             return;
             
          } catch (IntegrityConstraintViolation e) {

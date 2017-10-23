@@ -182,8 +182,9 @@ public class PokemonEditServlet extends HttpServlet {
             pokemonsManager.update(pokemon);
 
             // Redirection
-            // TODO : Redirect with a message
-            response.sendRedirect(request.getContextPath() + "/pokemons");
+            String message = "Pokemon was successfully edited";
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("/success.jsp").forward(request, response);
             return;
          }
          catch (IntegrityConstraintViolation e) {
