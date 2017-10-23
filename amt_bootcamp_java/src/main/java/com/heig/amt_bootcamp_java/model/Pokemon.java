@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
  * The Pokemon class is the model to store Pokemon information. It provides the 
  * Pokemon.Type enum to describe a Pokemon type(s).
  */
-@Stateless
 public class Pokemon {
    
    public static final int MAX_TYPES = 3;
