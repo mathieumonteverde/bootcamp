@@ -1,9 +1,7 @@
 <%-- 
     Document   : configuration
-    Created on : Oct 18, 2017, 10:21:45 AM
     Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

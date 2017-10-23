@@ -1,7 +1,6 @@
 <%-- 
     Document   : pokemonEdit
-    Created on : 11 oct. 2017, 14:32:57
-    Author     : mathieu
+    Author     : Mathieu Monteverde, Sathiya Kirushnapillai
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

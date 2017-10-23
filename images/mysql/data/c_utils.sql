@@ -11,7 +11,8 @@ END //
 DELIMITER //
 CREATE PROCEDURE findAllPokemons (IN l INT, IN o INT)
 BEGIN
-  SELECT * FROM Pokemon 
+  SELECT * FROM Pokemon
+  ORDER BY Pokemon.No
   LIMIT l OFFSET o;
 END //
 
