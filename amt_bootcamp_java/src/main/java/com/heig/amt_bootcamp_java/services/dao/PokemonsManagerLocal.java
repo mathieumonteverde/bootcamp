@@ -95,4 +95,14 @@ public interface PokemonsManagerLocal {
     * @throws com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation
     */
    public void update(Pokemon p) throws IntegrityConstraintViolation;
+
+   
+   /**
+    * Search pokemon by name that containts a word
+    * @param name
+    * @param limit
+    * @param offset
+    * @return 
+    */
+   public List<Pokemon> search(String name, int limit, int offset);
 }

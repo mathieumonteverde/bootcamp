@@ -192,5 +192,15 @@ BEGIN
   WHERE PokemonNo = no;
 END //
 
+-- Search
 
+
+DELIMITER //
+CREATE PROCEDURE searchPokemon (IN n varchar(80), IN l INT, IN o INT)
+BEGIN
+  SELECT * FROM Pokemon
+  WHERE Name LIKE CONCAT('%', n, '%')
+  ORDER BY Pokemon.No
+  LIMIT l OFFSET o;
+END //
 

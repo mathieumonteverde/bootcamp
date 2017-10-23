@@ -29,6 +29,10 @@
             <article class="pokemon-list col-10 col-sm-10 col-md-10 col-lg-10">
                <h1 class="margin-sm">Pokedex</h1>
                
+               <div>
+                  
+               </div>
+               
                <%@include file="./parts/pagination.jsp"%>
                <div class="panel panel-default text-left">
                   <!-- Default panel contents -->

@@ -373,4 +373,34 @@ public class PokemonsManager implements PokemonsManagerLocal {
       
       return p;
    }
+   
+   @Override
+   public List<Pokemon> search(String name, int limit, int offset) {
+      List<Pokemon> result = new ArrayList<>();
+      
+      try (
+         Connection connection = dataSource.getConnection()
+      ) 
+      {
+         // Get all pokemons without join
+         PreparedStatement preparedStatement = 
+            connection.prepareStatement("CALL searchPokemon(?, ?, ?)");
+         preparedStatement.setString(1, name);
+         preparedStatement.setInt(2, limit);
+         preparedStatement.setInt(3, offset);
+         ResultSet pokemonRows = preparedStatement.executeQuery();
+                  
+         // For each pokemon
+         while(pokemonRows.next()) {
+            result.add(getPokemon(connection, pokemonRows));
+         }
+         
+      } catch (SQLException ex) {
+         Logger.getLogger(
+            PokemonsManager.class.getName()).log(Level.SEVERE, null, ex
+         );
+      }
+      
+      return result;
+   }
 }
