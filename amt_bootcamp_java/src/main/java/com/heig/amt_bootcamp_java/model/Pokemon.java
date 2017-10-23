@@ -1,7 +1,6 @@
 package com.heig.amt_bootcamp_java.model;
 
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
