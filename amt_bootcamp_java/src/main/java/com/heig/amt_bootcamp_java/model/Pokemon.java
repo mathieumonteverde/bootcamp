@@ -57,27 +57,10 @@ public class Pokemon {
    }
 
    public void setMoves(List<Move> moves) {
-      this.moves = filterRepetition(moves);
+      this.moves = moves;
    }
 
    public void setTypes(List<Type> types) {
-      this.types = filterRepetition(types);
-   }
-   
-   private static <T> List<T> filterRepetition(List<T> types) {
-      ArrayList<T> list = new ArrayList<>();
-      
-      for (T t1 : types) {
-         boolean contains = false;
-         for (T t2 : list) {
-            contains = contains && t2.equals(t1);
-         }
-         
-         if (!contains) {
-            list.add(t1);
-         }
-      }
-      
-      return list;
+      this.types = types;
    }
 }
