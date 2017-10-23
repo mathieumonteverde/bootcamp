@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.heig.amt_bootcamp_java.web;
 
 import com.heig.amt_bootcamp_java.exceptions.IntegrityConstraintViolation;
@@ -27,17 +22,18 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 /**
- *
- * @author mathieu
+ * This servlet serves the edit page
+ * 
+ * @author Mathieu Monteverde, Sathiya Kirushnapillai
  */
 public class PokemonEditServlet extends HttpServlet {
-   
+
    @EJB
    private MovesManagerLocal movesManager;
-   
+
    @EJB
    private TypesManagerLocal typesManager;
-   
+
    @EJB
    private PokemonsManagerLocal pokemonsManager;
 
@@ -53,47 +49,43 @@ public class PokemonEditServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
 
-      // Get the pokemon parameter
+      // Get the pokemon no parameter
       int pokemonNo = 0;
-      try{
+      try {
          pokemonNo = Integer.parseInt(request.getParameter("pokemon"));
-      } 
-      catch(NumberFormatException e) {
-         response.sendError(HttpServletResponse.SC_NOT_FOUND);
-      }
-         
-      // Get the pokemon
-      Pokemon pokemon = pokemonsManager.findByNo(pokemonNo);
-      if(pokemon == null) {
+      } catch (NumberFormatException e) {
          response.sendError(HttpServletResponse.SC_NOT_FOUND);
       }
 
+      // Get the pokemon
+      Pokemon pokemon = pokemonsManager.findByNo(pokemonNo);
+      if (pokemon == null) {
+         response.sendError(HttpServletResponse.SC_NOT_FOUND);
+      }
 
       // Set attribute for the form
       request.setAttribute("pokemon", pokemon);
       request.setAttribute("types", typesManager.findAll());
       request.setAttribute("moves", movesManager.findAll());
 
-
       // Set types
       List<String> typeValues = new ArrayList<>();
-      for(Type t : pokemon.getTypes()) {
+      for (Type t : pokemon.getTypes()) {
          typeValues.add(t.getName());
       }
 
-      for(int i = typeValues.size(); i < Pokemon.MAX_TYPES; i++) {
+      for (int i = typeValues.size(); i < Pokemon.MAX_TYPES; i++) {
          typeValues.add("Type " + i);
       }
       request.setAttribute("typesValues", typeValues);
 
-
       // Set moves
       List<String> movesValues = new ArrayList<>();
-      for(Move m : pokemon.getMoves()) {
+      for (Move m : pokemon.getMoves()) {
          movesValues.add("" + m.getId());
       }
 
-      for(int i = movesValues.size(); i < Pokemon.MAX_MOVES; i++) {
+      for (int i = movesValues.size(); i < Pokemon.MAX_MOVES; i++) {
          movesValues.add("Move " + i);
       }
       request.setAttribute("movesValues", movesValues);
@@ -112,72 +104,65 @@ public class PokemonEditServlet extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-      
-      // Get the POST submitted data
-      String selectedPokemonNo = request.getParameter("pokemonNo");
-      
-      // POKEMON NO VALIDATION
-      Pokemon pokemon = null;
+
+      // Get the pokemon
+      Pokemon pokemon;
       try {
+         String selectedPokemonNo = request.getParameter("pokemonNo");
          int no = Integer.parseInt(selectedPokemonNo);
-         
+
          // Check for negative number
-         if(0 > no) {
+         if (0 > no) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
          }
-         
+
          pokemon = pokemonsManager.findByNo(no);
-         if(pokemon == null) {
+         if (pokemon == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
          }
-      }
-      catch(NumberFormatException e) {
+      } catch (NumberFormatException e) {
          response.sendError(HttpServletResponse.SC_NOT_FOUND);
          return;
       }
 
       // Set Name
       pokemon.setName(request.getParameter("pokemonName"));
-      
-      
-            // Set types
+
+      // Set types
       ArrayList<Type> types = new ArrayList<>();
-      for(int i = 1; i <= Pokemon.MAX_TYPES; i++) {
+      for (int i = 1; i <= Pokemon.MAX_TYPES; i++) {
          String t = request.getParameter("pokemonType" + i);
          Type type = typesManager.findByName(t);
-         if(type != null) {
+         if (type != null) {
             types.add(type);
          }
       }
       pokemon.setTypes(types);
-  
+
       // Set moves
       ArrayList<Move> moves = new ArrayList<>();
-      
-      for(int i = 1; i <= Pokemon.MAX_MOVES; i++) {
+
+      for (int i = 1; i <= Pokemon.MAX_MOVES; i++) {
          try {
             String m = request.getParameter("pokemonMove" + i);
             Move move = movesManager.findById(Integer.parseInt(m));
-            if(move != null) {
+            if (move != null) {
                moves.add(move);
             }
+         } catch (NumberFormatException e) {
          }
-         catch(NumberFormatException e) {}
       }
       pokemon.setMoves(moves);
-      
-      
 
       ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
       Validator validator = factory.getValidator();
-      
+
       Set<ConstraintViolation<Pokemon>> violations = validator.validate(pokemon);
-      
+
       String constraintError = null;
-      if(violations.size() == 0) 
-      {
+      if (violations.isEmpty()) {
          try {
             pokemonsManager.update(pokemon);
 
@@ -186,47 +171,45 @@ public class PokemonEditServlet extends HttpServlet {
             request.setAttribute("message", message);
             request.getRequestDispatcher("/success.jsp").forward(request, response);
             return;
-         }
-         catch (IntegrityConstraintViolation e) {
+         } catch (IntegrityConstraintViolation e) {
             constraintError = e.getValue();
          }
       }
-      
+
       response.setContentType("text/html;charset=UTF-8");
 
       request.setAttribute("pokemon", pokemon);
       request.setAttribute("types", typesManager.findAll());
       request.setAttribute("moves", movesManager.findAll());
-      
+
       List<String> selectedTypes = new ArrayList<>();
-      for(Type type : pokemon.getTypes()) {
+      for (Type type : pokemon.getTypes()) {
          selectedTypes.add(type.getName());
       }
-      for(int i = pokemon.getTypes().size(); i < Pokemon.MAX_TYPES; i++) {
+      for (int i = pokemon.getTypes().size(); i < Pokemon.MAX_TYPES; i++) {
          selectedTypes.add("Type " + i);
       }
       request.setAttribute("typesValues", selectedTypes);
+
       
       List<String> selectedMoves = new ArrayList<>();
-      for(Move move : pokemon.getMoves()) {
+      for (Move move : pokemon.getMoves()) {
          selectedMoves.add("" + move.getId());
       }
-      for(int i = pokemon.getMoves().size(); i < Pokemon.MAX_MOVES; i++) {
+      for (int i = pokemon.getMoves().size(); i < Pokemon.MAX_MOVES; i++) {
          selectedMoves.add("Move " + i);
       }
       request.setAttribute("movesValues", selectedMoves);
-      
+
       // Set errors
       for (ConstraintViolation<Pokemon> violation : violations) {
          request.setAttribute(
-            violation.getPropertyPath() + "Error" , 
-            violation.getMessage()
+                 violation.getPropertyPath() + "Error",
+                 violation.getMessage()
          );
       }
-      
-      request.setAttribute("constraintError", constraintError);
 
-      
+      request.setAttribute("constraintError", constraintError);
 
       request.getRequestDispatcher("/WEB-INF/views/pokemonEdit.jsp").forward(request, response);
    }
